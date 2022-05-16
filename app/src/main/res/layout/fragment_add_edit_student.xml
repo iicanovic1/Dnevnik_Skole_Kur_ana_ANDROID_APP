@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <View
+        android:id="@+id/viewStudentColor"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/circle_shape"
+        app:layout_constraintBottom_toBottomOf="@id/etStudentLastName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/etStudentLastName" />
+
+    <EditText
+        android:id="@+id/etStudentLastName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Prezime"
+        android:padding="16dp"
+        android:saveEnabled="true"
+        android:textColorHint="@android:color/tertiary_text_dark"
+        app:layout_constraintEnd_toStartOf="@+id/viewStudentColor"
+        app:layout_constraintStart_toEndOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="parent"  />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_begin="170dp"
+        android:orientation="vertical" />
+
+    <EditText
+        android:id="@+id/etStudentName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Ime"
+        android:padding="16dp"
+        android:saveEnabled="true"
+        android:textColorHint="@android:color/tertiary_text_dark"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <EditText
+        android:id="@+id/etStudentContent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:hint="Student sadržaj"
+        android:inputType="textMultiLine"
+        android:padding="16dp"
+        android:gravity="top"
+        android:background="@null"
+        android:saveEnabled="true"
+        android:textColorHint="@android:color/tertiary_text_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etStudentName"/>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

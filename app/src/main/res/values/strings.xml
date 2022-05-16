@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Dnevnik Skole Kur_ana</string>
+    <string name="student_sync_status">sihronizirano</string>
 </resources>
