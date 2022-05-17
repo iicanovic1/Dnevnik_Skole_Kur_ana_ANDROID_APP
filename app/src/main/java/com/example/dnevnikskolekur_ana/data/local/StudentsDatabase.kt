@@ -1,6 +1,7 @@
 package com.example.dnevnikskolekur_ana.data.local
 
 import androidx.room.Database
+import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.dnevnikskolekur_ana.data.local.entities.Student
 
@@ -9,6 +10,6 @@ import com.example.dnevnikskolekur_ana.data.local.entities.Student
     version = 1
 )
 @TypeConverters(Converters::class)
-abstract class StudentsDatabase {
+abstract class StudentsDatabase : RoomDatabase() {
     abstract fun studentDao():StudentDao
 }
