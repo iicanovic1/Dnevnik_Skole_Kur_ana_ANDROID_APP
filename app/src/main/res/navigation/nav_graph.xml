@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
+    app:startDestination="@id/authFragment">
+    <fragment
+        android:id="@+id/authFragment"
+        android:name="com.example.dnevnikskolekur_ana.ui.auth.AuthFragment"
+        android:label="AuthFragment" >
+        <action
+            android:id="@+id/action_authFragment_to_studentsFragment"
+            app:destination="@id/studentsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/studentsFragment"
+        android:name="com.example.dnevnikskolekur_ana.ui.students.StudentsFragment"
+        android:label="StudentsFragment" >
+        <action
+            android:id="@+id/action_studentsFragment_to_studentDetailFragment"
+            app:destination="@id/studentDetailFragment" />
+        <action
+            android:id="@+id/action_studentsFragment_to_addEditStudentFragment"
+            app:destination="@id/addEditStudentFragment" />
+        <action
+            android:id="@+id/action_studentsFragment_to_authFragment"
+            app:destination="@id/authFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/studentDetailFragment"
+        android:name="com.example.dnevnikskolekur_ana.ui.studentDetail.StudentDetailFragment"
+        android:label="StudentDetailFragment" >
+        <action
+            android:id="@+id/action_studentDetailFragment_to_addEditStudentFragment"
+            app:destination="@id/addEditStudentFragment" />
+        <argument
+            android:name="id"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/addEditStudentFragment"
+        android:name="com.example.dnevnikskolekur_ana.ui.addEditStudent.AddEditStudentFragment"
+        android:label="AddEditStudentFragment" >
+        <argument
+            android:name="id"
+            app:argType="string" />
+    </fragment>
+</navigation>
