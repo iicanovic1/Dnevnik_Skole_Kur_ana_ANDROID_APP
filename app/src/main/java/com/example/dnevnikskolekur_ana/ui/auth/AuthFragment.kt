@@ -13,6 +13,8 @@ import com.example.dnevnikskolekur_ana.R
 import com.example.dnevnikskolekur_ana.data.remote.BasicAuthInterceptor
 import com.example.dnevnikskolekur_ana.other.Constants.KEY_LOGGED_IN_EMAIL
 import com.example.dnevnikskolekur_ana.other.Constants.KEY_PASSWORD
+import com.example.dnevnikskolekur_ana.other.Constants.NO_EMAIL
+import com.example.dnevnikskolekur_ana.other.Constants.NO_PASSWORD
 import com.example.dnevnikskolekur_ana.other.Status
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_auth.*
@@ -35,6 +37,11 @@ class AuthFragment : BaseFragment(R.layout.fragment_auth) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         subscribeToObservers()
+
+        if(isLoggedIn()){
+            authenticateApi(curEmail ?: "", curPassword ?: "")
+            redirectlogin()
+        }
 
         btnRegister.setOnClickListener {
             val email = etRegisterEmail.text.toString()
@@ -109,6 +116,12 @@ class AuthFragment : BaseFragment(R.layout.fragment_auth) {
                 AuthFragmentDirections.actionAuthFragmentToStudentsFragment(),
                 navOptions
         )
+    }
+
+    private fun isLoggedIn() : Boolean {
+        curEmail = sharedPref.getString(KEY_LOGGED_IN_EMAIL, NO_EMAIL) ?: NO_EMAIL
+        curPassword = sharedPref.getString(KEY_PASSWORD, NO_PASSWORD ) ?: NO_PASSWORD
+        return curEmail != NO_EMAIL && curPassword != NO_PASSWORD
     }
 
 }
