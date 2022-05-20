@@ -16,10 +16,22 @@ class StudentRepository @Inject constructor(
         private val studentApi: StudentApi,
         private val context: Application
 ) {
-
     suspend fun register(email : String, password :String)  = withContext(Dispatchers.IO) { // osiguravamao da se koristi IO Dispećer
         try {
             val response = studentApi.register(AccountRequest(email, password))
+            if(response.isSuccessful && response.body()!!.successful){
+                Resource.success(response.body()?.message)
+            }else{
+                Resource.error(response.body()?.message ?: response.message(),null)
+            }
+        }catch (e: Exception){
+            Resource.error("Nije moguće kontaktirati server. Provjerite internet konekciju!",null)
+        }
+    }
+
+    suspend fun login(email : String, password :String)  = withContext(Dispatchers.IO) {
+        try {
+            val response = studentApi.login(AccountRequest(email, password))
             if(response.isSuccessful && response.body()!!.successful){
                 Resource.success(response.body()?.message)
             }else{

@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 abstract class BaseFragment(layoutId : Int) : Fragment(layoutId) {
 
     fun showSnackbar(text : String){
-        Snackbar.make(
+        val snackbar = Snackbar.make(
             requireActivity().rootLayout,
             text,
             Snackbar.LENGTH_LONG

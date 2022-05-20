@@ -8,4 +8,6 @@ object Constants {
     const val BASE_URL = "http://192.168.1.5:8001" // Retrofit spajanje na server
 
     const val ENCRYPTED_SHARED_PREF_NAME = "en_shared_pref"
+    const val KEY_LOGGED_IN_EMAIL = "KEY_LOGGED_IN_EMAIL"
+    const val KEY_PASSWORD = "KEY_PASSWORD"
 }
