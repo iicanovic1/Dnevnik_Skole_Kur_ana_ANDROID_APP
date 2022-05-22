@@ -37,6 +37,6 @@ interface StudentApi {
         @Body addAccessRequest: AddAccessRequest
     ): Response<SimpleResponse>
 
-    @GET("/getStudnets")
+    @GET("/getStudents")
     suspend fun getStudnets(): Response<List<Student>>
 }

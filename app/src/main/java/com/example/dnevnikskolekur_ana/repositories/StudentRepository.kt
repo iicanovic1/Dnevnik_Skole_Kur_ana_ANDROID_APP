@@ -13,6 +13,7 @@ import com.example.dnevnikskolekur_ana.other.networkBoundResource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
+import retrofit2.Response
 import java.lang.Exception
 import javax.inject.Inject
 
@@ -48,18 +49,20 @@ class StudentRepository @Inject constructor(
         }
     }
 
+    // prikaz studenti fragment
+
     fun getAllStudents() : Flow<Resource<List<Student>>> {
         return networkBoundResource(
                 query = {
                     studentDao.getAllStudents()
                 },
                 fetch = {
-                    studentApi.getStudnets()
+                    syncStudents()
+                    curSudentsResponse
                 },
                 saveFetchResult = { response ->   // što smo dobili sa api-ja
-                    response.body()?.let{
-                        //insertNotes(it.onEach { note -> note.isSynced = true })
-                        insertStudents(it)
+                    response?.body()?.let{
+                        insertStudents(it.onEach { student -> student.isSynced = true })
                     }
                 },
                 shouldFetch = {
@@ -67,6 +70,10 @@ class StudentRepository @Inject constructor(
                 }
         )
     }
+
+    // prikaz detaljan studenta
+
+
 
     suspend fun insertStudent(student: Student) {
         val response = try {
@@ -106,4 +113,27 @@ class StudentRepository @Inject constructor(
             deleteLocallyDeletedStudentID(studentID)
         }
     }
+
+    // refresh
+
+    private var curSudentsResponse : Response<List<Student>>? = null
+
+    suspend fun syncStudents(){
+        val locallyDeletedStudentIDs = studentDao.getAllLocallyDeletedStudentIDs()
+        locallyDeletedStudentIDs.forEach{
+            id -> deleteStudent(id.deletedStudentID)
+        }
+        val unsyncedStudents = studentDao.getAllUnsyncedStudents()
+        unsyncedStudents.forEach {
+            student -> insertStudent(student)
+        }
+
+        curSudentsResponse = studentApi.getStudnets()
+        curSudentsResponse?.body()?.let { students ->
+            studentDao.deleteAllStudents()
+            //insertStudents(students.onEach { student -> student.isSynced = true })
+            insertStudents(students)
+        }
+    }
+
 }

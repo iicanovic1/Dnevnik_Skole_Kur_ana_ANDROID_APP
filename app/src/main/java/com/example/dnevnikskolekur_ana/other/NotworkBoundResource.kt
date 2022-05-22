@@ -17,7 +17,7 @@ inline fun <ResultType, RequestType> networkBoundResource( // vraća flow
 
         try {
             val fetcedResult = fetch() // Fetch sa API
-            saveFetchResult(fetcedResult)  // spašavanje u bazu
+            //saveFetchResult(fetcedResult)  // spašavanje u bazu
             query().map { Resource.success(it)} // pozivanje iz baze i smještanje u resurs
         }catch (t  : Throwable){
             onFetchFailed(t)

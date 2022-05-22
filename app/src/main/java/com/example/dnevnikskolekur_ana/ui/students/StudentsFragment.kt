@@ -45,6 +45,7 @@ class StudentsFragment : BaseFragment(R.layout.fragment_students) {
         requireActivity().requestedOrientation = SCREEN_ORIENTATION_USER
         setupRecyclerView()
         subscibeToObservers()
+        setupSwipeRefreshLayout()
 
         studentAdapter.setOnItemClickListener {
             findNavController().navigate(
@@ -128,11 +129,17 @@ class StudentsFragment : BaseFragment(R.layout.fragment_students) {
         inflater.inflate(R.menu.menu_students,menu)
     }
 
+    // swipe refresh
+
+    private fun setupSwipeRefreshLayout() {
+        swipeRefreshLayout.setOnRefreshListener {
+            viewModel.syncAllNotes()
+        }
+    }
+
     // Swipe opcija za delete
 
-    private val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
-            0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
-    ){
+    private val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT){
         override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean
         ) {
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
