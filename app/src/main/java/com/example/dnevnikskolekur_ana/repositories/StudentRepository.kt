@@ -73,7 +73,7 @@ class StudentRepository @Inject constructor(
 
     // prikaz detaljan studenta
 
-
+    fun observeStudentID(studentID: String) = studentDao.observeStudentById(studentID)
 
     suspend fun insertStudent(student: Student) {
         val response = try {
