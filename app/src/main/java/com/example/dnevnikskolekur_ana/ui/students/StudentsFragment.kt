@@ -8,12 +8,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.androiddevs.ktornoteapp.adapters.StudentAdapter
 import com.androiddevs.ktornoteapp.ui.BaseFragment
 import com.example.dnevnikskolekur_ana.R
-import com.example.dnevnikskolekur_ana.data.local.entities.Student
+import com.example.dnevnikskolekur_ana.adapters.StudentAdapter
 import com.example.dnevnikskolekur_ana.other.Constants.KEY_LOGGED_IN_EMAIL
 import com.example.dnevnikskolekur_ana.other.Constants.KEY_PASSWORD
 import com.example.dnevnikskolekur_ana.other.Constants.NO_EMAIL

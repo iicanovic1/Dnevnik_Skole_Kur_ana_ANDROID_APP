@@ -57,6 +57,7 @@ class StudentRepository @Inject constructor(
                 saveFetchResult = { response ->   // što smo dobili sa api-ja
                     response.body()?.let{
                         //insertNotes(it.onEach { note -> note.isSynced = true })
+                        insertStudents(it)
                     }
                 },
                 shouldFetch = {
@@ -64,4 +65,23 @@ class StudentRepository @Inject constructor(
                 }
         )
     }
+
+    suspend fun insertStudent(student: Student) {
+        val response = try {
+            studentApi.addStudent(student)
+        }catch (e: Exception){
+            null
+        }
+        if (response != null && response.isSuccessful){
+            studentDao.insertStudent(student.apply { isSynced = true })
+        }else{
+            studentDao.insertStudent(student)
+        }
+    }
+
+    suspend fun insertStudents (studets: List<Student>){
+        studets.forEach{student -> insertStudent(student)}
+    }
+
+    suspend fun getStudentById(studentID: String) = studentDao.getStudentById(studentID)
 }

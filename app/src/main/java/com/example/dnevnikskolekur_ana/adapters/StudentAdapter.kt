@@ -1,4 +1,4 @@
-package com.androiddevs.ktornoteapp.adapters
+package com.example.dnevnikskolekur_ana.adapters
 
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -15,9 +15,9 @@ import kotlinx.android.synthetic.main.item_student.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class StudentAdapter : RecyclerView.Adapter<StudentAdapter.NoteViewHolder>(){
+class StudentAdapter : RecyclerView.Adapter<StudentAdapter.StudnetViewHolder>(){
 
-    inner class NoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    inner class StudnetViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     private val diffCallback = object : DiffUtil.ItemCallback<Student>(){  // pronalazak razlika između 2 liste
         override fun areItemsTheSame(oldItem: Student, newItem: Student): Boolean {
@@ -36,13 +36,13 @@ class StudentAdapter : RecyclerView.Adapter<StudentAdapter.NoteViewHolder>(){
         get() = differ.currentList
         set(value) = differ.submitList(value)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
-        return NoteViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudnetViewHolder {
+        return StudnetViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.item_student, parent, false)
         )
     }
 
-    override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: StudnetViewHolder, position: Int) {
         val student = students[position]
         holder.itemView.apply {
             tvTitle.text = student.name + " " + student.lastName

@@ -14,7 +14,7 @@ data class Student (
     val accessEmails : List<Access>,
     val color: String,
     @Expose(deserialize = false, serialize = false)
-    val isSynced: Boolean = false,
+    var isSynced: Boolean = false,
     @PrimaryKey(autoGenerate = false)
     val id : String = UUID.randomUUID().toString()
 )
