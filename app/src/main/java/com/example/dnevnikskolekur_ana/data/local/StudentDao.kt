@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.example.dnevnikskolekur_ana.data.local.entities.LocallyDeletedStudentID
 import com.example.dnevnikskolekur_ana.data.local.entities.Student
 import kotlinx.coroutines.flow.Flow
 
@@ -34,4 +35,13 @@ interface StudentDao {
 
     @Query("SELECT * FROM students WHERE isSynced = 0")
     suspend fun getAllUnsyncedStudents():List<Student>
+
+    @Query("SELECT * FROM locally_deleted_student_ids")
+    suspend fun getAllLocallyDeletedStudentIDs():List<LocallyDeletedStudentID>
+
+    @Query("DELETE FROM locally_deleted_student_ids WHERE deletedStudentID = :deletedStudentID")
+    suspend fun deleteLocallyDeletedStudentIDs(deletedStudentID: String)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertLocallyDeletedStudentIDs(localyDeletedStudentID: LocallyDeletedStudentID)
 }

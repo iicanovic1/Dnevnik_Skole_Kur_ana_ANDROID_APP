@@ -2,9 +2,11 @@ package com.androiddevs.ktornoteapp.repositories
 
 import android.app.Application
 import com.example.dnevnikskolekur_ana.data.local.StudentDao
+import com.example.dnevnikskolekur_ana.data.local.entities.LocallyDeletedStudentID
 import com.example.dnevnikskolekur_ana.data.local.entities.Student
 import com.example.dnevnikskolekur_ana.data.remote.StudentApi
 import com.example.dnevnikskolekur_ana.data.remote.requests.AccountRequest
+import com.example.dnevnikskolekur_ana.data.remote.requests.DeleteStudentRequest
 import com.example.dnevnikskolekur_ana.other.Resource
 import com.example.dnevnikskolekur_ana.other.checkForInternetConnection
 import com.example.dnevnikskolekur_ana.other.networkBoundResource
@@ -84,4 +86,24 @@ class StudentRepository @Inject constructor(
     }
 
     suspend fun getStudentById(studentID: String) = studentDao.getStudentById(studentID)
+
+    //brisanje studenata
+
+    suspend fun deleteLocallyDeletedStudentID(deletedStudentID: String) {
+        studentDao.deleteLocallyDeletedStudentIDs(deletedStudentID)
+    }
+
+    suspend fun deleteStudent(studentID: String) {
+        val response = try {
+            studentApi.deleteStudent(DeleteStudentRequest(studentID))
+        } catch (e: Exception) {
+            null
+        }
+        studentDao.deleteStudentById(studentID)
+        if(response == null || !response.isSuccessful) {
+            studentDao.insertLocallyDeletedStudentIDs(LocallyDeletedStudentID(studentID))
+        }else{
+            deleteLocallyDeletedStudentID(studentID)
+        }
+    }
 }
