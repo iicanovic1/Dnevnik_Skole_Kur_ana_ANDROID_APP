@@ -48,10 +48,37 @@ object AppModule { // opisuje kako da dager piše ove ovisnosti
 
     @Singleton
     @Provides
+    fun provideOkHttpClient() : OkHttpClient.Builder {
+        val trustAllCertificates: Array<TrustManager> = arrayOf(
+                object : X509TrustManager {
+                    override fun checkClientTrusted(chain: Array<out X509Certificate>?, authType: String?) {
+                        /* NO - OP */
+                    }
+
+                    override fun checkServerTrusted(chain: Array<out X509Certificate>?, authType: String?) {
+                        /* NO - OP */
+                    }
+
+                    override fun getAcceptedIssuers(): Array<X509Certificate> {
+                        return  arrayOf()
+                    }
+                }
+        )
+        val sslContext = SSLContext.getInstance("SSL")
+        sslContext.init(null, trustAllCertificates, SecureRandom())
+
+        return OkHttpClient.Builder()
+                .sslSocketFactory(sslContext.socketFactory, trustAllCertificates[0] as X509TrustManager)
+                .hostnameVerifier(HostnameVerifier {_, _ -> true})
+    }
+
+    @Singleton
+    @Provides
     fun provideNoteApi(
+            okHttpClient: OkHttpClient.Builder,
         basicAuthInterceptor: BasicAuthInterceptor
     ) : StudentApi{
-        val client = OkHttpClient.Builder()
+        val client = okHttpClient
             .addInterceptor(basicAuthInterceptor)
             .build()
         return Retrofit.Builder()
