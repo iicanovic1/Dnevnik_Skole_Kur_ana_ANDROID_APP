@@ -2,10 +2,12 @@ package com.androiddevs.ktornoteapp.repositories
 
 import android.app.Application
 import com.example.dnevnikskolekur_ana.data.local.StudentDao
+import com.example.dnevnikskolekur_ana.data.local.entities.Access
 import com.example.dnevnikskolekur_ana.data.local.entities.LocallyDeletedStudentID
 import com.example.dnevnikskolekur_ana.data.local.entities.Student
 import com.example.dnevnikskolekur_ana.data.remote.StudentApi
 import com.example.dnevnikskolekur_ana.data.remote.requests.AccountRequest
+import com.example.dnevnikskolekur_ana.data.remote.requests.AddAccessRequest
 import com.example.dnevnikskolekur_ana.data.remote.requests.DeleteStudentRequest
 import com.example.dnevnikskolekur_ana.other.Resource
 import com.example.dnevnikskolekur_ana.other.checkForInternetConnection
@@ -133,6 +135,21 @@ class StudentRepository @Inject constructor(
             studentDao.deleteAllStudents()
             //insertStudents(students.onEach { student -> student.isSynced = true })
             insertStudents(students)
+        }
+    }
+
+    // dodavanje pristupa studentima
+
+    suspend fun addAccessToStudent(studentID: String, access : Access)  = withContext(Dispatchers.IO) {
+        try {
+            val response = studentApi.addAccessToStudent(AddAccessRequest(studentID,access))
+            if(response.isSuccessful && response.body()!!.successful){
+                Resource.success(response.body()?.message)
+            }else{
+                Resource.error(response.body()?.message ?: response.message(),null)
+            }
+        }catch (e: Exception){
+            Resource.error("Nije moguće kontaktirati server. Provjerite internet konekciju!",null)
         }
     }
 
