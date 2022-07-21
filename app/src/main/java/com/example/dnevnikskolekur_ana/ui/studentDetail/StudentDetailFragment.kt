@@ -84,8 +84,10 @@ class StudentDetailFragment : BaseFragment(R.layout.fragment_student_detail) {
                 tvStudentTitle.text = student.name + " " + student.lastName
                 tvStudentContent.text = student.content
                 curStudent = student
-                if(!hasEditAccess())
+                if(!hasEditAccess()){
+                    setHasOptionsMenu(true)
                     fabEditStudent.hide()
+                }
             }?: showSnackbar("Student nije pronađen")
         })
     }

@@ -60,10 +60,10 @@ class StudentRepository @Inject constructor(
                 },
                 fetch = {
                     syncStudents()
-                    curSudentsResponse
+                    studentApi.getStudnets()
                 },
                 saveFetchResult = { response ->   // što smo dobili sa api-ja
-                    response?.body()?.let{
+                    response.body()?.let{
                         insertStudents(it.onEach { student -> student.isSynced = true })
                     }
                 },
@@ -118,7 +118,6 @@ class StudentRepository @Inject constructor(
 
     // refresh
 
-    private var curSudentsResponse : Response<List<Student>>? = null
 
     suspend fun syncStudents(){
         val locallyDeletedStudentIDs = studentDao.getAllLocallyDeletedStudentIDs()
@@ -130,12 +129,6 @@ class StudentRepository @Inject constructor(
             student -> insertStudent(student)
         }
 
-        curSudentsResponse = studentApi.getStudnets()
-        curSudentsResponse?.body()?.let { students ->
-            studentDao.deleteAllStudents()
-            //insertStudents(students.onEach { student -> student.isSynced = true })
-            insertStudents(students)
-        }
     }
 
     // dodavanje pristupa studentima
