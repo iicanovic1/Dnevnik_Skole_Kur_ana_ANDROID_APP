@@ -85,7 +85,7 @@ class StudentDetailFragment : BaseFragment(R.layout.fragment_student_detail) {
                 tvStudentContent.text = student.content
                 curStudent = student
                 if(!hasEditAccess()){
-                    setHasOptionsMenu(true)
+                    setHasOptionsMenu(false)
                     fabEditStudent.hide()
                 }
             }?: showSnackbar("Student nije pronađen")

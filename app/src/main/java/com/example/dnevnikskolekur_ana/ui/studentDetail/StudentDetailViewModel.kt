@@ -1,6 +1,5 @@
 package com.example.dnevnikskolekur_ana.ui.studentDetail
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,10 +8,12 @@ import com.androiddevs.ktornoteapp.repositories.StudentRepository
 import com.example.dnevnikskolekur_ana.data.local.entities.Access
 import com.example.dnevnikskolekur_ana.other.Event
 import com.example.dnevnikskolekur_ana.other.Resource
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-
-class StudentDetailViewModel @ViewModelInject constructor(
+@HiltViewModel
+class StudentDetailViewModel @Inject constructor(
        private val repository: StudentRepository
 ): ViewModel() {
 

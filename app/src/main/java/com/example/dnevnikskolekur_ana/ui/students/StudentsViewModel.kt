@@ -1,15 +1,16 @@
 package com.example.dnevnikskolekur_ana.ui.students
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.androiddevs.ktornoteapp.repositories.StudentRepository
 import com.example.dnevnikskolekur_ana.data.local.entities.Student
 import com.example.dnevnikskolekur_ana.other.Event
 import com.example.dnevnikskolekur_ana.other.Resource
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-
-class StudentsViewModel @ViewModelInject constructor (
+@HiltViewModel
+class StudentsViewModel @Inject constructor (
         private val repository: StudentRepository
 ): ViewModel() {
 

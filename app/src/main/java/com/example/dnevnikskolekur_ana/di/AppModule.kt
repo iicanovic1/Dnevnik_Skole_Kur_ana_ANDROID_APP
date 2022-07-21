@@ -11,12 +11,11 @@ import com.example.dnevnikskolekur_ana.data.remote.StudentApi
 import com.example.dnevnikskolekur_ana.other.Constants.BASE_URL
 import com.example.dnevnikskolekur_ana.other.Constants.DATABASE_NAME
 import com.example.dnevnikskolekur_ana.other.Constants.ENCRYPTED_SHARED_PREF_NAME
-import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -29,7 +28,7 @@ import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
 
 @Module
-@InstallIn(ApplicationComponent::class) // koliko dugo ovisnosti da žive (za vrijeme života aplikacije)
+@InstallIn(SingletonComponent::class) // koliko dugo ovisnosti da žive (za vrijeme života aplikacije)
 object AppModule { // opisuje kako da dager piše ove ovisnosti
 
     @Singleton

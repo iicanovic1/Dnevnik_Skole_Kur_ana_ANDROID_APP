@@ -64,6 +64,7 @@ class StudentRepository @Inject constructor(
                 },
                 saveFetchResult = { response ->   // što smo dobili sa api-ja
                     response.body()?.let{
+                        studentDao.deleteAllStudents()
                         insertStudents(it.onEach { student -> student.isSynced = true })
                     }
                 },
