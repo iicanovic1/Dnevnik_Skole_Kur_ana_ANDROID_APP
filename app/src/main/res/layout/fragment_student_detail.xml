@@ -38,9 +38,10 @@
             android:clickable="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvStudentTitle">
+            app:layout_constraintTop_toBottomOf="@+id/tvStudentTitle"
+            app:layout_constraintVertical_bias="0.0">
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tvStudentContent"
@@ -57,12 +58,24 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabEditStudent"
-        android:layout_width="wrap_content"
+        android:layout_width="85dp"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_edit"
         android:backgroundTint="@color/colorAccent"
         app:fabSize="normal"
         app:layout_anchor="@id/clStudentContainer"
-        app:layout_anchorGravity="bottom|right|end" />
+        app:layout_anchorGravity="bottom|left|end"
+        app:srcCompat="@drawable/ic_edit"
+        android:contentDescription="Uredi" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddAnswersToStudent"
+        android:layout_width="85dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorAccent"
+        app:fabSize="normal"
+        app:layout_anchor="@id/clStudentContainer"
+        app:layout_anchorGravity="bottom|right|end"
+        app:srcCompat="@drawable/ic_add"
+        android:contentDescription="Dodaj" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

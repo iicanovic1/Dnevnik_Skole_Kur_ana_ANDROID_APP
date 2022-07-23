@@ -12,8 +12,7 @@ import androidx.lifecycle.observe
 import androidx.navigation.fragment.navArgs
 import com.androiddevs.ktornoteapp.ui.BaseFragment
 import com.example.dnevnikskolekur_ana.R
-import com.example.dnevnikskolekur_ana.data.local.entities.Access
-import com.example.dnevnikskolekur_ana.data.local.entities.Student
+import com.example.dnevnikskolekur_ana.data.local.entities.*
 import com.example.dnevnikskolekur_ana.other.Constants.DEFAULT_NOTE_COLOR
 import com.example.dnevnikskolekur_ana.other.Constants.KEY_LOGGED_IN_EMAIL
 import com.example.dnevnikskolekur_ana.other.Constants.NO_EMAIL
@@ -110,7 +109,8 @@ class AddEditStudentFragment : BaseFragment(R.layout.fragment_add_edit_student) 
         val color = curStudentColor
         val id = curStudent?.id ?: UUID.randomUUID().toString()
         val accessEmails =curStudent?.accessEmails ?: listOf(Access(authEmail,true))
-        val student = Student(name, lastName, content, date, accessEmails, color, id = id)
+        val student = Student(name, lastName, content, date, accessEmails, color, id = id,
+            answers = listOf(Answer(AnswerType.JUZ,Juzes.JUZ1,null,null,date, 4)))
         viewModel.insertStudent(student)
     }
 

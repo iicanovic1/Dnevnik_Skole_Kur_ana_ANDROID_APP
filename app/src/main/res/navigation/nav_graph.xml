@@ -34,11 +34,22 @@
         <argument
             android:name="id"
             app:argType="string" />
+        <action
+            android:id="@+id/action_studentDetailFragment_to_addAnswersToStudentFragment"
+            app:destination="@id/addAnswersToStudentFragment" />
     </fragment>
     <fragment
         android:id="@+id/addEditStudentFragment"
         android:name="com.example.dnevnikskolekur_ana.ui.addEditStudent.AddEditStudentFragment"
         android:label="AddEditStudentFragment" >
+        <argument
+            android:name="id"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/addAnswersToStudentFragment"
+        android:name="com.example.dnevnikskolekur_ana.ui.addAnswersToStudent.AddAnswersToStudentFragment"
+        android:label="AddAnswersToStudentFragment" >
         <argument
             android:name="id"
             app:argType="string" />

@@ -43,6 +43,11 @@ class StudentDetailFragment : BaseFragment(R.layout.fragment_student_detail) {
                 )
             }
         }
+        fabAddAnswersToStudent.setOnClickListener {
+            findNavController().navigate(
+                StudentDetailFragmentDirections.actionStudentDetailFragmentToAddAnswersToStudentFragment(args.id)
+            )
+        }
         if(savedInstanceState != null){
             val addAccessDialog = parentFragmentManager.findFragmentByTag(ADD_ACCESS_DIALOG_TAG) as AddAccessDialog?
             addAccessDialog?.setPositiveListener {
