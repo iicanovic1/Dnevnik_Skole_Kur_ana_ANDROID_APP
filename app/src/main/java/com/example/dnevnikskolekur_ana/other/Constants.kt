@@ -1,7 +1,7 @@
 package com.example.dnevnikskolekur_ana.other
 
-import com.example.dnevnikskolekur_ana.data.local.entities.Surahs
-import com.example.dnevnikskolekur_ana.data.local.entities.Surahs.*
+import com.example.dnevnikskolekur_ana.data.local.entities.Juz.*
+import com.example.dnevnikskolekur_ana.data.local.entities.juzesList
 
 object Constants {
     val IGNORE_AUTH_URLS= listOf("/login","/register") // lista urlova koji se ne presreću za zaglavlje o autorizaciji
@@ -18,6 +18,9 @@ object Constants {
 
     const val DEFAULT_NOTE_COLOR = "FFA500"
 
-    val SURAHS = listOf(AL_FATIHA.surahName, AL_AHKAF.surahName, AD_DARIJAT.surahName,
-    AL_AHKAF.surahName)
+    val MARKS = List(5,{1+it})
+
+    val JUZES = juzesList
+
+
 }

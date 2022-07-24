@@ -8,7 +8,6 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.observe
 import androidx.navigation.fragment.navArgs
 import com.androiddevs.ktornoteapp.ui.BaseFragment
 import com.example.dnevnikskolekur_ana.R
@@ -110,7 +109,7 @@ class AddEditStudentFragment : BaseFragment(R.layout.fragment_add_edit_student) 
         val id = curStudent?.id ?: UUID.randomUUID().toString()
         val accessEmails =curStudent?.accessEmails ?: listOf(Access(authEmail,true))
         val student = Student(name, lastName, content, date, accessEmails, color, id = id,
-            answers = listOf(Answer(AnswerType.JUZ,Juzes.JUZ1,null,null,date, 4)))
+            answers = listOf(Answer(AnswerType.JUZ,Juz.JUZ27,null,null,date, 4)))
         viewModel.insertStudent(student)
     }
 

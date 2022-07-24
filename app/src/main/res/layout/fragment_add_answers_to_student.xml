@@ -24,31 +24,42 @@
         android:layout_marginRight="50dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/spAjeh"
+        app:layout_constraintBottom_toTopOf="@id/spAjehMin"
         app:layout_constraintTop_toBottomOf="@id/spJuz"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Spinner
-        android:id="@+id/spAjeh"
+        android:id="@+id/spAjehMin"
         android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:layout_width="match_parent"
+        android:layout_marginRight="5dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/spMark"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/spAjehMax"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spSurah"
  />
+    <Spinner
+        android:id="@+id/spAjehMax"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/spMark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/spAjehMin"
+        app:layout_constraintTop_toBottomOf="@+id/spSurah"
+        />
 
     <Spinner
         android:id="@+id/spMark"
-        android:layout_width="300dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/btSaveAnswer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spAjeh"
+        app:layout_constraintTop_toBottomOf="@+id/spAjehMin"
         />
 
     <Button
