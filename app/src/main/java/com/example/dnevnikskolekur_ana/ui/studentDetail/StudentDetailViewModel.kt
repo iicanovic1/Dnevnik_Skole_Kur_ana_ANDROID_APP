@@ -20,7 +20,7 @@ class StudentDetailViewModel @Inject constructor(
     private val _addAccessStatus = MutableLiveData<Event<Resource<String>>>()
     val addAccessStatus : LiveData<Event<Resource<String>>> = _addAccessStatus
 
-    fun observeStudentByID(studentID: String) = repository.observeStudentID(studentID)
+    fun observeStudentByID(studentID: String) = repository.observeStudentByID(studentID)
 
     fun addAccessToStudent(studentID: String, access: Access) {
         _addAccessStatus.postValue(Event(Resource.loading(null)))

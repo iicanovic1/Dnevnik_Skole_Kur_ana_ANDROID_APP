@@ -6,7 +6,7 @@ apply plugin: 'androidx.navigation.safeargs.kotlin'
 apply plugin: 'dagger.hilt.android.plugin'
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion 30
     buildToolsVersion '30.0.3'
 
     buildFeatures {
@@ -15,8 +15,8 @@ android {
 
     defaultConfig {
         applicationId "com.example.dnevnikskolekur_ana"
-        minSdkVersion 23
-        targetSdkVersion 32
+        minSdkVersion 25
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
 

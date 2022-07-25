@@ -108,8 +108,7 @@ class AddEditStudentFragment : BaseFragment(R.layout.fragment_add_edit_student) 
         val color = curStudentColor
         val id = curStudent?.id ?: UUID.randomUUID().toString()
         val accessEmails =curStudent?.accessEmails ?: listOf(Access(authEmail,true))
-        val student = Student(name, lastName, content, date, accessEmails, color, id = id,
-            answers = listOf(Answer(AnswerType.JUZ,Juz.JUZ27,null,null,date, 4)))
+        val student = Student(name, lastName, content, date, accessEmails, color, id = id)
         viewModel.insertStudent(student)
     }
 

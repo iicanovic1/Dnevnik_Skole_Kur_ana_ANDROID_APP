@@ -4,6 +4,7 @@ import com.androiddevs.ktornoteapp.data.remote.responses.SimpleResponse
 import com.example.dnevnikskolekur_ana.data.local.entities.Student
 import com.example.dnevnikskolekur_ana.data.remote.requests.AccountRequest
 import com.example.dnevnikskolekur_ana.data.remote.requests.AddAccessRequest
+import com.example.dnevnikskolekur_ana.data.remote.requests.AddAnswerRequest
 import com.example.dnevnikskolekur_ana.data.remote.requests.DeleteStudentRequest
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -35,6 +36,11 @@ interface StudentApi {
     @POST("/addAccessToStudent")
     suspend fun addAccessToStudent(
         @Body addAccessRequest: AddAccessRequest
+    ): Response<SimpleResponse>
+
+    @POST("/addAnswerToStudent")
+    suspend fun addAnswerToStudent(
+        @Body addAnswerRequest: AddAnswerRequest
     ): Response<SimpleResponse>
 
     @GET("/getStudents")

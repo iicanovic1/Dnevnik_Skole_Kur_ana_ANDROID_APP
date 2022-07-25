@@ -58,7 +58,8 @@ class StudentDetailFragment : BaseFragment(R.layout.fragment_student_detail) {
 
     private fun hasEditAccess() : Boolean {
         val allAccesses =  curStudent?.accessEmails?.filter { access ->
-                    access.email == sharedPref.getString(Constants.KEY_LOGGED_IN_EMAIL, NO_EMAIL) ?: NO_EMAIL
+            access.email == (sharedPref.getString(Constants.KEY_LOGGED_IN_EMAIL, NO_EMAIL)
+                ?: NO_EMAIL)
                 }
         var _hasEditAccess : Boolean = false
         allAccesses?.forEach { access ->  if(access.edit == true) _hasEditAccess = true}
