@@ -7,9 +7,11 @@ import androidx.lifecycle.viewModelScope
 import com.androiddevs.ktornoteapp.repositories.StudentRepository
 import com.example.dnevnikskolekur_ana.data.local.entities.Answer
 import com.example.dnevnikskolekur_ana.data.local.entities.Juz
+import com.example.dnevnikskolekur_ana.data.local.entities.Student
 import com.example.dnevnikskolekur_ana.other.Event
 import com.example.dnevnikskolekur_ana.other.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,20 +20,19 @@ class AddAnswersToStudentViewModel @Inject constructor(
     private val repository: StudentRepository
 ): ViewModel() {
 
-    private val _addAnswerStatus = MutableLiveData<Event<Resource<String>>>()
-    val addAnswerStatus : LiveData<Event<Resource<String>>> = _addAnswerStatus
+    private val _student = MutableLiveData<Event<Resource<Student>>>()
+    val student: LiveData<Event<Resource<Student>>> = _student
 
-    fun observeStudentByID(studentID: String) = repository.observeStudentByID(studentID)
 
-    fun addAnswerToStudent(studentID: String, answer: Answer) {
-        _addAnswerStatus.postValue(Event(Resource.loading(null)))
-        if(answer.juzNumber == Juz.JUZ_NULL){
-            _addAnswerStatus.postValue(Event(Resource.error("Morate odabrati barem džuz!", null)))
-            return
-        }
-        viewModelScope.launch {
-            val result = repository.addAnswerToStudent(studentID,answer)
-            _addAnswerStatus.postValue(Event(result))
-        }
+    fun getStudentById(studentID: String)= viewModelScope.launch {
+        _student.postValue(Event(Resource.loading(null)))
+        val studnet = repository.getStudentById(studentID)
+        studnet?.let {
+            _student.postValue(Event(Resource.success(it)))
+        } ?: _student.postValue(Event(Resource.error("Student nije pronađen",null)))
+    }
+
+    fun addAnswerToCurStudent(student: Student,answer: Answer) = GlobalScope.launch {
+        repository.insertStudent(student)
     }
 }

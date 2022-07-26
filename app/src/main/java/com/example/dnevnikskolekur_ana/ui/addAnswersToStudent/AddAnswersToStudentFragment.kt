@@ -5,9 +5,10 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Spinner
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.androiddevs.ktornoteapp.ui.BaseFragment
 import com.example.dnevnikskolekur_ana.R
@@ -17,9 +18,12 @@ import com.example.dnevnikskolekur_ana.data.local.entities.Juz.*
 import com.example.dnevnikskolekur_ana.data.local.entities.Surah.*
 import com.example.dnevnikskolekur_ana.other.Constants.JUZES
 import com.example.dnevnikskolekur_ana.other.Constants.MARKS
+import com.example.dnevnikskolekur_ana.other.Event
+import com.example.dnevnikskolekur_ana.other.Resource
+import com.example.dnevnikskolekur_ana.other.Status
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_add_answers_to_student.*
-import kotlinx.android.synthetic.main.fragment_student_detail.*
+import kotlinx.android.synthetic.main.fragment_add_edit_student.*
 
 @AndroidEntryPoint
 class AddAnswersToStudentFragment : BaseFragment(R.layout.fragment_add_answers_to_student)  {
@@ -37,9 +41,14 @@ class AddAnswersToStudentFragment : BaseFragment(R.layout.fragment_add_answers_t
 
     private var curStudent : Student? = null
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        subscribeToObservers()
+
+        if(args.id.isNotEmpty()){
+            viewModel.getStudentById(args.id)
+            subscribeToObservers()
+        }
 
         setupJuzSpinner()
         setupSurahSpinner()
@@ -47,33 +56,64 @@ class AddAnswersToStudentFragment : BaseFragment(R.layout.fragment_add_answers_t
         setupMarkSpinner()
 
         btSaveAnswer.setOnClickListener {
-            var answerType : AnswerType = JUZ
-            if (surah != SURAH_NULL){
-                if (ajehMinSelectedNumber == 1 && ajehMaxSelectedNumber == surah.numberOfAjat)
-                    answerType = SURAH
-                else
-                    answerType = AJEH
-            }
-            val answer = Answer(answerType,juz,surah,ajehMinSelectedNumber,
-                ajehMaxSelectedNumber,System.currentTimeMillis(),mark)
-
-            addAnswerToCurStudent(answer)
+            saveAnswer()
+            redirect()
         }
 
+    }
+
+    private fun saveAnswer(){
+        var answerType : AnswerType = JUZ
+        if (surah != SURAH_NULL){
+            if (ajehMinSelectedNumber == 1 && ajehMaxSelectedNumber == surah.numberOfAjat)
+                answerType = SURAH
+            else
+                answerType = AJEH
+        }
+        val answer = Answer(answerType,juz,surah,ajehMinSelectedNumber,
+            ajehMaxSelectedNumber,System.currentTimeMillis(),mark)
+
+        if(answer.juzNumber == Juz.JUZ_NULL){
+            showSnackbar("Morate odabrati barem džuz!")
+            return
+        }
+        addAnswerToCurStudent(answer)
     }
 
     private fun addAnswerToCurStudent(answer: Answer) {
         curStudent?.let { student ->
-            viewModel.addAnswerToStudent(student.id, answer)
+            curStudent?.apply { answers = answers + answer }
+                ?.let { viewModel.addAnswerToCurStudent(it,answer) }
         }
     }
 
     private fun subscribeToObservers(){
-        viewModel.observeStudentByID(args.id).observe(viewLifecycleOwner, Observer {
-            it?.let { student ->
-                curStudent = student
-            }?: showSnackbar("Greška prilikom učitavanja podataka")
+        viewModel.student.observe(viewLifecycleOwner, Observer {
+            it?.getContentIfNotHandled()?.let { result ->
+                when(result.status){
+                    Status.SUCCESS -> {
+                        val student = result.data!!
+                        curStudent = student
+                    }
+                    Status.ERROR -> {
+                        showSnackbar(result.message ?: "Student nije pronađen")
+                    }
+                    Status.LOADING -> {
+                        /* NO-OP*/ //ovdje se samo učitava iz baze
+                    }
+                }
+            }
         })
+    }
+
+    private fun redirect(){
+        val navOptions = NavOptions.Builder()
+            .setPopUpTo(R.id.studentDetailFragment,true)
+            .build()  // onemogućavanje povratka na dodavanje odgovora kroz dugme nazad
+        findNavController().navigate(
+            AddAnswersToStudentFragmentDirections.actionAddAnswersToStudentFragmentToStudentDetailFragment(curStudent?.id ?: "" ),
+            navOptions
+        )
     }
 
 

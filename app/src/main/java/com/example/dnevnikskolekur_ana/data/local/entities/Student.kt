@@ -13,7 +13,7 @@ data class Student (
     val date : Long,
     val accessEmails : List<Access>,
     val color: String,
-    val answers : List<Answer> = emptyList(),
+    var answers : List<Answer> = emptyList(),
     val average : Float = 5F,
     @Expose(deserialize = false, serialize = false)
     var isSynced: Boolean = false,

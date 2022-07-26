@@ -2,7 +2,6 @@ package com.example.dnevnikskolekur_ana.ui.studentDetail
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -71,15 +70,15 @@ class StudentDetailFragment : BaseFragment(R.layout.fragment_student_detail) {
             event?.getContentIfNotHandled()?.let { result ->
                 when(result.status) {
                     Status.SUCCESS -> {
-                        addAccessProgressBar.visibility = View.GONE
+                        progressBar.visibility = View.GONE
                         showSnackbar(result.data?:"Uspješno dodan pristup studnetu")
                     }
                     Status.ERROR -> {
-                        addAccessProgressBar.visibility = View.GONE
+                        progressBar.visibility = View.GONE
                         showSnackbar(result.message?:"Nepoznata greška")
                     }
                     Status.LOADING -> {
-                        addAccessProgressBar.visibility = View.VISIBLE
+                        progressBar.visibility = View.VISIBLE
                     }
                 }
 
