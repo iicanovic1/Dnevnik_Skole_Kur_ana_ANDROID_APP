@@ -33,4 +33,6 @@ class StudentDetailViewModel @Inject constructor(
             _addAccessStatus.postValue(Event(result))
         }
     }
+
+
 }
