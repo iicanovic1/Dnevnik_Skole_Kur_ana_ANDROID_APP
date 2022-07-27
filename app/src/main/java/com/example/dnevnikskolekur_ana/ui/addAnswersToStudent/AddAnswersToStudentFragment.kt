@@ -13,17 +13,16 @@ import androidx.navigation.fragment.navArgs
 import com.androiddevs.ktornoteapp.ui.BaseFragment
 import com.example.dnevnikskolekur_ana.R
 import com.example.dnevnikskolekur_ana.data.local.entities.*
-import com.example.dnevnikskolekur_ana.data.local.entities.AnswerType.*
-import com.example.dnevnikskolekur_ana.data.local.entities.Juz.*
-import com.example.dnevnikskolekur_ana.data.local.entities.Surah.*
+import com.example.dnevnikskolekur_ana.other.Constants.AJEH
+import com.example.dnevnikskolekur_ana.other.Constants.JUZ
 import com.example.dnevnikskolekur_ana.other.Constants.JUZES
+import com.example.dnevnikskolekur_ana.other.Constants.JUZ_NULL
 import com.example.dnevnikskolekur_ana.other.Constants.MARKS
-import com.example.dnevnikskolekur_ana.other.Event
-import com.example.dnevnikskolekur_ana.other.Resource
+import com.example.dnevnikskolekur_ana.other.Constants.SURAH
+import com.example.dnevnikskolekur_ana.other.Constants.SURAH_NULL
 import com.example.dnevnikskolekur_ana.other.Status
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_add_answers_to_student.*
-import kotlinx.android.synthetic.main.fragment_add_edit_student.*
 
 @AndroidEntryPoint
 class AddAnswersToStudentFragment : BaseFragment(R.layout.fragment_add_answers_to_student)  {
@@ -73,7 +72,7 @@ class AddAnswersToStudentFragment : BaseFragment(R.layout.fragment_add_answers_t
         val answer = Answer(answerType,juz,surah,ajehMinSelectedNumber,
             ajehMaxSelectedNumber,System.currentTimeMillis(),mark)
 
-        if(answer.juzNumber == Juz.JUZ_NULL){
+        if(answer.juzNumber == JUZ_NULL){
             showSnackbar("Morate odabrati barem džuz!")
             return
         }
@@ -130,7 +129,7 @@ class AddAnswersToStudentFragment : BaseFragment(R.layout.fragment_add_answers_t
 
                 juz = adapterView?.getItemAtPosition(position) as Juz
 
-                val surahList = listOf(SURAH_NULL) + juz.surahs // ako nije odabran JUZ, odabrana sura je SURAH_NULL i odgovor se smatra da je samo za Džuz
+                val surahList : List<Surah> = listOf(SURAH_NULL) + juz.surahs // ako nije odabran JUZ, odabrana sura je SURAH_NULL i odgovor se smatra da je samo za Džuz
 
                 val surahAdapter = ArrayAdapter(activity as Context, R.layout.support_simple_spinner_dropdown_item,surahList)
                 spSurah.adapter = surahAdapter
@@ -151,7 +150,10 @@ class AddAnswersToStudentFragment : BaseFragment(R.layout.fragment_add_answers_t
                 val ajehAdapter = ArrayAdapter(activity as Context, R.layout.support_simple_spinner_dropdown_item,ajehList?: emptyList())
                 spAjehMin.adapter = ajehAdapter
                 spAjehMax.adapter = ajehAdapter
-                ajehMaxSelectedNumber = ajehList?.get(ajehList.size - 1)
+                ajehList?.let {
+                    if(ajehList.size > 0)
+                        ajehMaxSelectedNumber = ajehList?.get(ajehList.size - 1)
+                }
                 spAjehMax.setSelection(ajehMaxSelectedNumber?.minus(1) ?: return)
 
             }

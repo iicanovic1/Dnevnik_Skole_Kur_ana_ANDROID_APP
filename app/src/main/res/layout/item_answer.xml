@@ -3,13 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="70dp"
     android:background="#303030"
     android:clickable="false">
 
     <View
         android:id="@+id/viewStudentColor"
-        android:layout_width="60dp"
+        android:layout_width="40dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:layout_height="match_parent"
         android:background="@drawable/circle_shape"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -19,16 +21,17 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvTitle"
-        android:layout_width="250dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         android:text="Answer Title"
         android:textColor="@android:color/white"
-        android:textSize="30sp"
+        android:textSize="22sp"
         android:textStyle="bold"
         android:ellipsize="end"
         android:lines="1"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tvDate"
         app:layout_constraintStart_toEndOf="@+id/viewStudentColor"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,7 +39,7 @@
         android:id="@+id/tvMark"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="10dp"
         android:text="Mark"
         android:textColor="@android:color/white"
         android:textSize="30sp"
@@ -45,7 +48,6 @@
         android:lines="1"
         android:layout_marginEnd="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tvTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -55,9 +57,11 @@
         android:id="@+id/tvDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="10dp"
         android:text="DATE"
         android:textColor="@android:color/secondary_text_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/viewStudentColor"
         app:layout_constraintTop_toBottomOf="@+id/tvTitle"  />
 

@@ -14,6 +14,8 @@ import com.example.dnevnikskolekur_ana.data.local.entities.Answer
 import com.example.dnevnikskolekur_ana.data.local.entities.AnswerType
 import com.example.dnevnikskolekur_ana.data.local.entities.Student
 import com.example.dnevnikskolekur_ana.other.Constants
+import com.example.dnevnikskolekur_ana.other.Constants.AJEH
+import com.example.dnevnikskolekur_ana.other.Constants.JUZ
 import kotlinx.android.synthetic.main.item_answer.view.*
 import kotlinx.android.synthetic.main.item_student.view.*
 import kotlinx.android.synthetic.main.item_student.view.tvDate
@@ -53,12 +55,12 @@ class AnswerAdapter : RecyclerView.Adapter<AnswerAdapter.AnswerViewHolder>(){
         val answer = answers[position]
         holder.itemView.apply {
             var name : String
-            if (answer.type == AnswerType.JUZ )
+            if (answer.type == JUZ )
                 name = answer.juzNumber.toString()
             else
                 name = answer.surah.toString()
 
-            if (answer.type == AnswerType.AJEH )
+            if (answer.type == AJEH )
                 name += " ${answer.ajehMin}-${answer.ajehMax}"
 
             tvTitle.text = name

@@ -1,7 +1,8 @@
 package com.example.dnevnikskolekur_ana.data.local.entities
 
-enum class AnswerType () {
-    SURAH,
-    JUZ,
-    AJEH
+data class AnswerType (val typeName : String) {
+
+    override fun toString(): String {
+        return typeName
+    }
 }

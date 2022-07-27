@@ -1,30 +1,33 @@
 package com.example.dnevnikskolekur_ana.ui.studentDetail
 
+import android.content.Context
 import android.content.SharedPreferences
-import android.graphics.Canvas
 import android.os.Bundle
 import android.view.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.androiddevs.ktornoteapp.ui.BaseFragment
 import com.example.dnevnikskolekur_ana.R
 import com.example.dnevnikskolekur_ana.adapters.AnswerAdapter
-import com.example.dnevnikskolekur_ana.adapters.StudentAdapter
 import com.example.dnevnikskolekur_ana.data.local.entities.Access
+import com.example.dnevnikskolekur_ana.data.local.entities.AnswerType
 import com.example.dnevnikskolekur_ana.data.local.entities.Student
 import com.example.dnevnikskolekur_ana.other.Constants
+import com.example.dnevnikskolekur_ana.other.Constants.AJEH
+import com.example.dnevnikskolekur_ana.other.Constants.ANSWER_TYPES
+import com.example.dnevnikskolekur_ana.other.Constants.JUZ
 import com.example.dnevnikskolekur_ana.other.Constants.NO_EMAIL
+import com.example.dnevnikskolekur_ana.other.Constants.SURAH
+import com.example.dnevnikskolekur_ana.other.Constants.TYPE_NULL
 import com.example.dnevnikskolekur_ana.other.Status
 import com.example.dnevnikskolekur_ana.ui.dialogs.AddAccessDialog
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_student_detail.*
-import kotlinx.android.synthetic.main.fragment_students.*
 import javax.inject.Inject
 
 const val ADD_ACCESS_DIALOG_TAG = "ADD_ACCESS_DIALOG_TAG"
@@ -42,10 +45,12 @@ class StudentDetailFragment : BaseFragment(R.layout.fragment_student_detail) {
 
     private var curStudent : Student? = null
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         subscribeToObservers()
         setupRecyclerView()
+        setupTypeSpinner()
         fabEditStudent.setOnClickListener {
             if(hasEditAccess()){
                 findNavController().navigate(
@@ -72,6 +77,42 @@ class StudentDetailFragment : BaseFragment(R.layout.fragment_student_detail) {
         }
 
 
+    }
+
+    // POSTAVKE SPINNERA
+    private fun setupTypeSpinner() {
+        // Punjenje spinnera za Tipove
+        val typesList = ANSWER_TYPES
+        val typesAdapter = ArrayAdapter(activity as Context, R.layout.spinner_item,
+            typesList)
+        spAnswerType.adapter = typesAdapter
+
+        spAnswerType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
+                val type = adapterView?.getItemAtPosition(position) as AnswerType
+
+                curStudent?.let {  student ->
+                    when(type){
+                        TYPE_NULL -> {
+                            answersAdapter.answers = student.answers
+                        }
+                        JUZ -> {
+                            answersAdapter.answers = student.answers.filter { it.type == JUZ }
+                        }
+                        SURAH -> {
+                            answersAdapter.answers = student.answers.filter { it.type == SURAH }
+                        }
+                        AJEH -> {
+                            answersAdapter.answers = student.answers.filter { it.type == AJEH }
+                        }
+
+                    }
+                }
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
+        }
     }
 
     private fun hasEditAccess() : Boolean {

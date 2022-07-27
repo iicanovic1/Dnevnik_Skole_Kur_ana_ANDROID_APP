@@ -29,6 +29,8 @@
             android:hint="IME I PREZIME"
             android:textColor="@android:color/white"
             android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,6 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:clickable="false"
+            android:layout_marginTop="10dp"
             app:layout_constraintBottom_toTopOf="@id/rvAnswers"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -55,15 +58,30 @@
 
         </ScrollView>
 
+        <Spinner
+            android:id="@+id/spAnswerType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/purple_200"
+            android:hapticFeedbackEnabled="true"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toTopOf="@+id/rvAnswers"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/scrollView" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvAnswers"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="9"
             android:clickable="false"
+            android:layout_marginBottom="45dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/scrollView" />
+            app:layout_constraintTop_toBottomOf="@id/spAnswerType" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -72,11 +90,11 @@
         android:layout_width="85dp"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/colorAccent"
+        android:contentDescription="Uredi"
         app:fabSize="normal"
         app:layout_anchor="@id/clStudentContainer"
         app:layout_anchorGravity="bottom|left|end"
-        app:srcCompat="@drawable/ic_edit"
-        android:contentDescription="Uredi" />
+        app:srcCompat="@drawable/ic_edit" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddAnswersToStudent"
