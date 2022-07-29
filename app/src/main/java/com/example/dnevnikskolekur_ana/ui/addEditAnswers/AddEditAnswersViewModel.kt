@@ -31,6 +31,6 @@ class AddEditAnswersViewModel @Inject constructor(
     }
 
     fun insertStudent(student: Student) = GlobalScope.launch {
-        repository.insertStudent(student)
+        repository.insertStudent(student.apply { answers = answers.sortedByDescending { it.date } })
     }
 }

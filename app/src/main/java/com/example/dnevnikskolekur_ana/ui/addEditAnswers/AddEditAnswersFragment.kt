@@ -7,8 +7,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.NavOptions
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.androiddevs.ktornoteapp.ui.BaseFragment
 import com.example.dnevnikskolekur_ana.R
@@ -22,10 +20,11 @@ import com.example.dnevnikskolekur_ana.other.Constants.SURAH
 import com.example.dnevnikskolekur_ana.other.Constants.SURAH_NULL
 import com.example.dnevnikskolekur_ana.other.Status
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_add_answers_to_student.*
+import kotlinx.android.synthetic.main.fragment_add_edit_answers.*
+import java.util.*
 
 @AndroidEntryPoint
-class AddEditAnswersFragment : BaseFragment(R.layout.fragment_add_answers_to_student)  {
+class AddEditAnswersFragment : BaseFragment(R.layout.fragment_add_edit_answers)  {
 
     private val args: AddEditAnswersFragmentArgs by navArgs()
     private val viewModel: AddEditAnswersViewModel by viewModels()
@@ -39,7 +38,7 @@ class AddEditAnswersFragment : BaseFragment(R.layout.fragment_add_answers_to_stu
     var mark = marksList.size
 
     private var curStudent : Student? = null
-    private var curAnswer : Answer? = null
+    private var oldAnswer : Answer? = null
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -70,20 +69,24 @@ class AddEditAnswersFragment : BaseFragment(R.layout.fragment_add_answers_to_stu
             else
                 answerType = AJEH
         }
+        val id = oldAnswer?.id ?: UUID.randomUUID().toString()
+        val date = oldAnswer?.date ?:  System.currentTimeMillis()
         val answer = Answer(answerType,juz,surah,ajehMinSelectedNumber,
-            ajehMaxSelectedNumber,System.currentTimeMillis(),mark)
+            ajehMaxSelectedNumber,date = date,mark, id = id)
 
         if(answer.juz == JUZ_NULL){
-            showSnackbar("Morate odabrati barem džuz!")
+            showSnackbar("Odgovor nije spašen, morate odabrati barem džuz!")
             return
         }
         addAnswerToCurStudent(answer)
     }
 
     private fun addAnswerToCurStudent(newAnswer: Answer) {
+        if(oldAnswer != null && oldAnswer == newAnswer)
+            return
         curStudent?.let { student ->
             student.apply { answers = answers + newAnswer ; isSynced = false}
-            curAnswer?.let {  oldAnswer ->
+            oldAnswer?.let { oldAnswer ->
                 viewModel.insertStudent(student.apply { answers = answers - oldAnswer })
             }?: viewModel.insertStudent(student)
 
@@ -99,11 +102,13 @@ class AddEditAnswersFragment : BaseFragment(R.layout.fragment_add_answers_to_stu
                         curStudent = student
 
                         if(args.answerID.isNotEmpty()){
-                            curAnswer = student.answers.find { answer -> answer.id == args.answerID }
+                            oldAnswer = student.answers.find { answer -> answer.id == args.answerID }
+                        }
 
-                            curAnswer?.let { answer ->
-                                spJuz.setSelection(answer.juz.juzNumber)
-                            }
+
+                        // ako je editovanje odgovora učitaj dzuz postojećeg odgovora
+                        oldAnswer?.let { answer ->
+                            spJuz.setSelection(answer.juz.juzNumber)
                         }
                     }
                     Status.ERROR -> {
@@ -125,6 +130,7 @@ class AddEditAnswersFragment : BaseFragment(R.layout.fragment_add_answers_to_stu
         val juzesAdapter = ArrayAdapter(activity as Context, R.layout.support_simple_spinner_dropdown_item,juzesList)
         spJuz.adapter = juzesAdapter
 
+
         // Punjenje spinnera za Sure nakon odabira JUZA
         spJuz.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -136,7 +142,8 @@ class AddEditAnswersFragment : BaseFragment(R.layout.fragment_add_answers_to_stu
                 val surahAdapter = ArrayAdapter(activity as Context, R.layout.support_simple_spinner_dropdown_item,surahList)
                 spSurah.adapter = surahAdapter
 
-                curAnswer?.let { answer ->
+                // ako je editovanje odgovora učitaj suru postojećeg odgovora
+                oldAnswer?.let { answer ->
                     spSurah.setSelection(surahList.indexOf(answer.surah))
                 }
             }
@@ -156,26 +163,23 @@ class AddEditAnswersFragment : BaseFragment(R.layout.fragment_add_answers_to_stu
                 val ajehAdapter = ArrayAdapter(activity as Context, R.layout.support_simple_spinner_dropdown_item,ajehList?: emptyList())
                 spAjehMin.adapter = ajehAdapter
                 spAjehMax.adapter = ajehAdapter
-                curAnswer?.let { answer ->
-                    if (answer.type == AJEH){
-                        spAjehMin.setSelection(answer.ajehMin!!-1)
-                        spAjehMax.setSelection(answer.ajehMax!!-1)
-                        ajehMinSelectedNumber = answer.ajehMin-1
-                        ajehMaxSelectedNumber = answer.ajehMax-1
+                oldAnswer?.let { oldAnswer ->
+                    if (oldAnswer.type == AJEH && oldAnswer.surah == surah){
+                        spAjehMin.setSelection(oldAnswer.ajehMin!!-1)
+                        spAjehMax.setSelection(oldAnswer.ajehMax!!-1)
+                        ajehMinSelectedNumber = oldAnswer.ajehMin-1
+                        ajehMaxSelectedNumber = oldAnswer.ajehMax-1
                         return
                     }
                 }
                 ajehList?.let {
-                    if(ajehList.size > 0)
-                        ajehMaxSelectedNumber = ajehList.get(ajehList.size - 1)
+                    if(ajehList.isNotEmpty())
+                        ajehMaxSelectedNumber = ajehList.size - 1
+                        spAjehMax.setSelection(ajehMaxSelectedNumber?: return)
                 }
-                spAjehMax.setSelection(ajehMaxSelectedNumber?.minus(1) ?: return)
-
             }
 
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-
-            }
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
     }
 
