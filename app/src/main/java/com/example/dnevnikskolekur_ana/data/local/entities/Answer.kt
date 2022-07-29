@@ -4,7 +4,7 @@ import java.util.*
 
 data class Answer(
     val type: AnswerType,
-    val juzNumber: Juz,
+    val juz: Juz,
     val surah: Surah,
     val ajehMin : Int?,
     val ajehMax : Int?,

@@ -56,19 +56,10 @@
         android:id="@+id/spMark"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/btSaveAnswer"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spAjehMin"
         />
 
-    <Button
-        android:id="@+id/btSaveAnswer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sačuvaj"
-        app:layout_constraintTop_toBottomOf="@id/spMark"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

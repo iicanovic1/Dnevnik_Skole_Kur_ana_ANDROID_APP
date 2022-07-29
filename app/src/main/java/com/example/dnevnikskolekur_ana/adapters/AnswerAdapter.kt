@@ -11,13 +11,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dnevnikskolekur_ana.R
 import com.example.dnevnikskolekur_ana.data.local.entities.Answer
-import com.example.dnevnikskolekur_ana.data.local.entities.AnswerType
-import com.example.dnevnikskolekur_ana.data.local.entities.Student
 import com.example.dnevnikskolekur_ana.other.Constants
 import com.example.dnevnikskolekur_ana.other.Constants.AJEH
 import com.example.dnevnikskolekur_ana.other.Constants.JUZ
 import kotlinx.android.synthetic.main.item_answer.view.*
-import kotlinx.android.synthetic.main.item_student.view.*
 import kotlinx.android.synthetic.main.item_student.view.tvDate
 import kotlinx.android.synthetic.main.item_student.view.tvTitle
 import kotlinx.android.synthetic.main.item_student.view.viewStudentColor
@@ -56,7 +53,7 @@ class AnswerAdapter : RecyclerView.Adapter<AnswerAdapter.AnswerViewHolder>(){
         holder.itemView.apply {
             var name : String
             if (answer.type == JUZ )
-                name = answer.juzNumber.toString()
+                name = answer.juz.toString()
             else
                 name = answer.surah.toString()
 

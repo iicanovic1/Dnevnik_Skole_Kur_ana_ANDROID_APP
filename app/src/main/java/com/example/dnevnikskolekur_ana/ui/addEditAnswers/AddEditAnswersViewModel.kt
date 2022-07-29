@@ -1,12 +1,10 @@
-package com.example.dnevnikskolekur_ana.ui.addAnswersToStudent
+package com.example.dnevnikskolekur_ana.ui.addEditAnswers
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.androiddevs.ktornoteapp.repositories.StudentRepository
-import com.example.dnevnikskolekur_ana.data.local.entities.Answer
-import com.example.dnevnikskolekur_ana.data.local.entities.Juz
 import com.example.dnevnikskolekur_ana.data.local.entities.Student
 import com.example.dnevnikskolekur_ana.other.Event
 import com.example.dnevnikskolekur_ana.other.Resource
@@ -16,7 +14,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AddAnswersToStudentViewModel @Inject constructor(
+class AddEditAnswersViewModel @Inject constructor(
     private val repository: StudentRepository
 ): ViewModel() {
 
@@ -32,7 +30,7 @@ class AddAnswersToStudentViewModel @Inject constructor(
         } ?: _student.postValue(Event(Resource.error("Student nije pronađen",null)))
     }
 
-    fun addAnswerToCurStudent(student: Student) = GlobalScope.launch {
+    fun insertStudent(student: Student) = GlobalScope.launch {
         repository.insertStudent(student)
     }
 }

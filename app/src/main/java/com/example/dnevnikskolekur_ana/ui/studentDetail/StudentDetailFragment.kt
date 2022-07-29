@@ -59,6 +59,7 @@ class StudentDetailFragment : BaseFragment(R.layout.fragment_student_detail) {
         subscribeToObservers()
         setupRecyclerView()
         setupTypeSpinner()
+
         fabEditStudent.setOnClickListener {
             if(hasEditAccess()){
                 findNavController().navigate(
@@ -66,11 +67,13 @@ class StudentDetailFragment : BaseFragment(R.layout.fragment_student_detail) {
                 )
             }
         }
+
         fabAddAnswersToStudent.setOnClickListener {
             findNavController().navigate(
-                StudentDetailFragmentDirections.actionStudentDetailFragmentToAddAnswersToStudentFragment(args.id)
+                StudentDetailFragmentDirections.actionStudentDetailFragmentToAddEditAnswersFragment(args.id,"")
             )
         }
+
         if(savedInstanceState != null){
             val addAccessDialog = parentFragmentManager.findFragmentByTag(ADD_ACCESS_DIALOG_TAG) as AddAccessDialog?
             addAccessDialog?.setPositiveListener {
@@ -80,7 +83,7 @@ class StudentDetailFragment : BaseFragment(R.layout.fragment_student_detail) {
 
         answersAdapter.setOnItemClickListener {
             findNavController().navigate(
-                StudentDetailFragmentDirections.actionStudentDetailFragmentToAddAnswersToStudentFragment(curStudent?.id?:"")
+                StudentDetailFragmentDirections.actionStudentDetailFragmentToAddEditAnswersFragment(args.id,it.id)
             )
         }
 

@@ -35,8 +35,8 @@
             android:name="id"
             app:argType="string" />
         <action
-            android:id="@+id/action_studentDetailFragment_to_addAnswersToStudentFragment"
-            app:destination="@id/addAnswersToStudentFragment" />
+            android:id="@+id/action_studentDetailFragment_to_addEditAnswersFragment"
+            app:destination="@id/addEditAnswersFragment" />
     </fragment>
     <fragment
         android:id="@+id/addEditStudentFragment"
@@ -47,14 +47,17 @@
             app:argType="string" />
     </fragment>
     <fragment
-        android:id="@+id/addAnswersToStudentFragment"
-        android:name="com.example.dnevnikskolekur_ana.ui.addAnswersToStudent.AddAnswersToStudentFragment"
-        android:label="AddAnswersToStudentFragment" >
-        <argument
-            android:name="id"
-            app:argType="string" />
+        android:id="@+id/addEditAnswersFragment"
+        android:name="com.example.dnevnikskolekur_ana.ui.addEditAnswers.AddEditAnswersFragment"
+        android:label="AddEditAnswersFragment" >
         <action
-            android:id="@+id/action_addAnswersToStudentFragment_to_studentDetailFragment"
+            android:id="@+id/action_addEditAnswersFragment_to_studentDetailFragment"
             app:destination="@id/studentDetailFragment" />
+        <argument
+            android:name="studentID"
+            app:argType="string" />
+        <argument
+            android:name="answerID"
+            app:argType="string" />
     </fragment>
 </navigation>

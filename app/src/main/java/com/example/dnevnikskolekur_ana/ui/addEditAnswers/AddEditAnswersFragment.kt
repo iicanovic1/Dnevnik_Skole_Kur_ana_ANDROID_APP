@@ -1,4 +1,4 @@
-package com.example.dnevnikskolekur_ana.ui.addAnswersToStudent
+package com.example.dnevnikskolekur_ana.ui.addEditAnswers
 
 import android.content.Context
 import android.os.Bundle
@@ -25,10 +25,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_add_answers_to_student.*
 
 @AndroidEntryPoint
-class AddAnswersToStudentFragment : BaseFragment(R.layout.fragment_add_answers_to_student)  {
+class AddEditAnswersFragment : BaseFragment(R.layout.fragment_add_answers_to_student)  {
 
-    private val args: AddAnswersToStudentFragmentArgs by navArgs()
-    private val viewModel: AddAnswersToStudentViewModel by viewModels()
+    private val args: AddEditAnswersFragmentArgs by navArgs()
+    private val viewModel: AddEditAnswersViewModel by viewModels()
 
     var ajehMaxSelectedNumber : Int? = null
     var ajehMinSelectedNumber : Int? = null
@@ -39,26 +39,27 @@ class AddAnswersToStudentFragment : BaseFragment(R.layout.fragment_add_answers_t
     var mark = marksList.size
 
     private var curStudent : Student? = null
+    private var curAnswer : Answer? = null
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        if(args.id.isNotEmpty()){
-            viewModel.getStudentById(args.id)
-            subscribeToObservers()
-        }
 
         setupJuzSpinner()
         setupSurahSpinner()
         setupAjehSpinners()
         setupMarkSpinner()
 
-        btSaveAnswer.setOnClickListener {
-            saveAnswer()
-            redirect()
+        if(args.studentID.isNotEmpty()){
+            viewModel.getStudentById(args.studentID)
+            subscribeToObservers()
         }
 
+    }
+
+    override fun onPause() {
+        super.onPause()
+        saveAnswer()
     }
 
     private fun saveAnswer(){
@@ -72,17 +73,20 @@ class AddAnswersToStudentFragment : BaseFragment(R.layout.fragment_add_answers_t
         val answer = Answer(answerType,juz,surah,ajehMinSelectedNumber,
             ajehMaxSelectedNumber,System.currentTimeMillis(),mark)
 
-        if(answer.juzNumber == JUZ_NULL){
+        if(answer.juz == JUZ_NULL){
             showSnackbar("Morate odabrati barem džuz!")
             return
         }
         addAnswerToCurStudent(answer)
     }
 
-    private fun addAnswerToCurStudent(answer: Answer) {
+    private fun addAnswerToCurStudent(newAnswer: Answer) {
         curStudent?.let { student ->
-            curStudent?.apply { answers = answers + answer ; isSynced = false}
-                ?.let { viewModel.addAnswerToCurStudent(it) }
+            student.apply { answers = answers + newAnswer ; isSynced = false}
+            curAnswer?.let {  oldAnswer ->
+                viewModel.insertStudent(student.apply { answers = answers - oldAnswer })
+            }?: viewModel.insertStudent(student)
+
         }
     }
 
@@ -93,6 +97,14 @@ class AddAnswersToStudentFragment : BaseFragment(R.layout.fragment_add_answers_t
                     Status.SUCCESS -> {
                         val student = result.data!!
                         curStudent = student
+
+                        if(args.answerID.isNotEmpty()){
+                            curAnswer = student.answers.find { answer -> answer.id == args.answerID }
+
+                            curAnswer?.let { answer ->
+                                spJuz.setSelection(answer.juz.juzNumber)
+                            }
+                        }
                     }
                     Status.ERROR -> {
                         showSnackbar(result.message ?: "Student nije pronađen")
@@ -103,16 +115,6 @@ class AddAnswersToStudentFragment : BaseFragment(R.layout.fragment_add_answers_t
                 }
             }
         })
-    }
-
-    private fun redirect(){
-        val navOptions = NavOptions.Builder()
-            .setPopUpTo(R.id.studentDetailFragment,true)
-            .build()  // onemogućavanje povratka na dodavanje odgovora kroz dugme nazad
-        findNavController().navigate(
-            AddAnswersToStudentFragmentDirections.actionAddAnswersToStudentFragmentToStudentDetailFragment(curStudent?.id ?: "" ),
-            navOptions
-        )
     }
 
 
@@ -133,6 +135,10 @@ class AddAnswersToStudentFragment : BaseFragment(R.layout.fragment_add_answers_t
 
                 val surahAdapter = ArrayAdapter(activity as Context, R.layout.support_simple_spinner_dropdown_item,surahList)
                 spSurah.adapter = surahAdapter
+
+                curAnswer?.let { answer ->
+                    spSurah.setSelection(surahList.indexOf(answer.surah))
+                }
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {}
@@ -150,9 +156,18 @@ class AddAnswersToStudentFragment : BaseFragment(R.layout.fragment_add_answers_t
                 val ajehAdapter = ArrayAdapter(activity as Context, R.layout.support_simple_spinner_dropdown_item,ajehList?: emptyList())
                 spAjehMin.adapter = ajehAdapter
                 spAjehMax.adapter = ajehAdapter
+                curAnswer?.let { answer ->
+                    if (answer.type == AJEH){
+                        spAjehMin.setSelection(answer.ajehMin!!-1)
+                        spAjehMax.setSelection(answer.ajehMax!!-1)
+                        ajehMinSelectedNumber = answer.ajehMin-1
+                        ajehMaxSelectedNumber = answer.ajehMax-1
+                        return
+                    }
+                }
                 ajehList?.let {
                     if(ajehList.size > 0)
-                        ajehMaxSelectedNumber = ajehList?.get(ajehList.size - 1)
+                        ajehMaxSelectedNumber = ajehList.get(ajehList.size - 1)
                 }
                 spAjehMax.setSelection(ajehMaxSelectedNumber?.minus(1) ?: return)
 
