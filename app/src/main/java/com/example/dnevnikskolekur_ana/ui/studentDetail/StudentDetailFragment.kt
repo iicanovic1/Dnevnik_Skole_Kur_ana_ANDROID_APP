@@ -2,15 +2,19 @@ package com.example.dnevnikskolekur_ana.ui.studentDetail
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Canvas
 import android.os.Bundle
 import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.androiddevs.ktornoteapp.ui.BaseFragment
 import com.example.dnevnikskolekur_ana.R
 import com.example.dnevnikskolekur_ana.adapters.AnswerAdapter
@@ -26,8 +30,10 @@ import com.example.dnevnikskolekur_ana.other.Constants.SURAH
 import com.example.dnevnikskolekur_ana.other.Constants.TYPE_NULL
 import com.example.dnevnikskolekur_ana.other.Status
 import com.example.dnevnikskolekur_ana.ui.dialogs.AddAccessDialog
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_student_detail.*
+import kotlinx.android.synthetic.main.fragment_students.*
 import javax.inject.Inject
 
 const val ADD_ACCESS_DIALOG_TAG = "ADD_ACCESS_DIALOG_TAG"
@@ -44,6 +50,8 @@ class StudentDetailFragment : BaseFragment(R.layout.fragment_student_detail) {
     private val args: StudentDetailFragmentArgs by navArgs()
 
     private var curStudent : Student? = null
+
+    private val swipingItem =  MutableLiveData(false)
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -196,14 +204,14 @@ class StudentDetailFragment : BaseFragment(R.layout.fragment_student_detail) {
         answersAdapter = AnswerAdapter()
         adapter = answersAdapter
         layoutManager = LinearLayoutManager(requireContext())
-        //ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(this)
+        ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(this)
     }
-/*
-    private val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT){
+
+    private val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT){
         override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean
         ) {
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-            if(actionState== ItemTouchHelper.ACTION_STATE_SWIPE){
+            if(actionState == ItemTouchHelper.ACTION_STATE_SWIPE){
                 swipingItem.postValue(isCurrentlyActive)
             }
         }
@@ -214,17 +222,18 @@ class StudentDetailFragment : BaseFragment(R.layout.fragment_student_detail) {
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             val position = viewHolder.layoutPosition
-            val student = studentAdapter.students[position]
-            student.apply { answers = answers - answer}
-
-            Snackbar.make(requireView(),"Odgovor je uspješno obrisan", Snackbar.LENGTH_INDEFINITE).apply {
-                setAction("Otkaži"){
-                    viewModel.insertStudent(curStudent)
+            val answer = answersAdapter.answers[position]
+            curStudent?.let {  student ->
+                student.apply { answers = answers - answer ; isSynced = false}
+                viewModel.insertStudent(student)
+                Snackbar.make(requireView(),"Odgovor je uspješno obrisan", Snackbar.LENGTH_INDEFINITE).apply {
+                    setAction("Otkaži"){
+                        viewModel.insertStudent(student.apply { answers = answers + answer ; isSynced = false } )
+                    }
+                    show()
                 }
-                show()
             }
         }
     }
 
- */
 }

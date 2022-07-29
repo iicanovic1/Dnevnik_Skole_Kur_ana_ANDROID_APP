@@ -32,7 +32,7 @@ class AddAnswersToStudentViewModel @Inject constructor(
         } ?: _student.postValue(Event(Resource.error("Student nije pronađen",null)))
     }
 
-    fun addAnswerToCurStudent(student: Student,answer: Answer) = GlobalScope.launch {
+    fun addAnswerToCurStudent(student: Student) = GlobalScope.launch {
         repository.insertStudent(student)
     }
 }

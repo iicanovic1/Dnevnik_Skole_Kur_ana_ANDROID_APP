@@ -9,7 +9,7 @@ object Constants {
 
     const val DATABASE_NAME = "students_db"
 
-    const val BASE_URL = "https://192.168.1.5:8002" // Retrofit spajanje na server
+    const val BASE_URL = "https://192.168.1.6:8002" // Retrofit spajanje na server
 
     const val ENCRYPTED_SHARED_PREF_NAME = "en_shared_pref"
     const val KEY_LOGGED_IN_EMAIL = "KEY_LOGGED_IN_EMAIL"

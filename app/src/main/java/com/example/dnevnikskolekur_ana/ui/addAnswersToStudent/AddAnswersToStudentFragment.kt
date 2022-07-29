@@ -81,8 +81,8 @@ class AddAnswersToStudentFragment : BaseFragment(R.layout.fragment_add_answers_t
 
     private fun addAnswerToCurStudent(answer: Answer) {
         curStudent?.let { student ->
-            curStudent?.apply { answers = answers + answer }
-                ?.let { viewModel.addAnswerToCurStudent(it,answer) }
+            curStudent?.apply { answers = answers + answer ; isSynced = false}
+                ?.let { viewModel.addAnswerToCurStudent(it) }
         }
     }
 

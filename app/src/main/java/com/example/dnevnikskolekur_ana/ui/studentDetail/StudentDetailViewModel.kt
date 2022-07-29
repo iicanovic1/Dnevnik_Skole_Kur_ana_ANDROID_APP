@@ -6,9 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.androiddevs.ktornoteapp.repositories.StudentRepository
 import com.example.dnevnikskolekur_ana.data.local.entities.Access
+import com.example.dnevnikskolekur_ana.data.local.entities.Answer
+import com.example.dnevnikskolekur_ana.data.local.entities.Student
 import com.example.dnevnikskolekur_ana.other.Event
 import com.example.dnevnikskolekur_ana.other.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -32,6 +35,10 @@ class StudentDetailViewModel @Inject constructor(
             val result = repository.addAccessToStudent(studentID,access)
             _addAccessStatus.postValue(Event(result))
         }
+    }
+
+    fun insertStudent(student: Student) = GlobalScope.launch {
+        repository.insertStudent(student)
     }
 
 
