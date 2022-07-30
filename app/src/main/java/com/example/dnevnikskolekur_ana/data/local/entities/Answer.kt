@@ -10,5 +10,6 @@ data class Answer(
     val ajehMax : Int?,
     val date: Long,
     val mark: Int,
-    val id: String = UUID.randomUUID().toString()
+    val id: String = UUID.randomUUID().toString(),
+    val revision : Boolean = false
 )

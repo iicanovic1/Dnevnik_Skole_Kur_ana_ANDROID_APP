@@ -69,10 +69,11 @@ class AddEditAnswersFragment : BaseFragment(R.layout.fragment_add_edit_answers) 
             else
                 answerType = AJEH
         }
+        val revision = swRevision.isChecked
         val id = oldAnswer?.id ?: UUID.randomUUID().toString()
         val date = oldAnswer?.date ?:  System.currentTimeMillis()
         val answer = Answer(answerType,juz,surah,ajehMinSelectedNumber,
-            ajehMaxSelectedNumber,date = date,mark, id = id)
+            ajehMaxSelectedNumber,date = date,mark, id = id, revision)
 
         if(answer.juz == JUZ_NULL){
             showSnackbar("Odgovor nije spašen, morate odabrati barem džuz!")
@@ -109,6 +110,7 @@ class AddEditAnswersFragment : BaseFragment(R.layout.fragment_add_edit_answers) 
                         // ako je editovanje odgovora učitaj dzuz postojećeg odgovora
                         oldAnswer?.let { answer ->
                             spJuz.setSelection(answer.juz.juzNumber)
+                            swRevision.isChecked = answer.revision
                         }
                     }
                     Status.ERROR -> {

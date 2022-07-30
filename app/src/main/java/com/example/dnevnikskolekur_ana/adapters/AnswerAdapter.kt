@@ -15,6 +15,7 @@ import com.example.dnevnikskolekur_ana.other.Constants
 import com.example.dnevnikskolekur_ana.other.Constants.AJEH
 import com.example.dnevnikskolekur_ana.other.Constants.JUZ
 import kotlinx.android.synthetic.main.item_answer.view.*
+import kotlinx.android.synthetic.main.item_student.view.*
 import kotlinx.android.synthetic.main.item_student.view.tvDate
 import kotlinx.android.synthetic.main.item_student.view.tvTitle
 import kotlinx.android.synthetic.main.item_student.view.viewStudentColor
@@ -65,6 +66,12 @@ class AnswerAdapter : RecyclerView.Adapter<AnswerAdapter.AnswerViewHolder>(){
             val dateFormat = SimpleDateFormat("dd.MM.yy, HH:mm", Locale.getDefault())
             val dateString = dateFormat.format(answer.date)
             tvDate.text = dateString
+
+            if(answer.revision)
+                ivRevision.setImageResource(R.drawable.ic_double_check)
+            else
+                ivRevision.setImageResource(R.drawable.ic_check)
+
 
             val drawable = ResourcesCompat.getDrawable(resources, R.drawable.circle_shape, null)
             drawable?.let{
