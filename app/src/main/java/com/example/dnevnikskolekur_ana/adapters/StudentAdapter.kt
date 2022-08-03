@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dnevnikskolekur_ana.R
 import com.example.dnevnikskolekur_ana.data.local.entities.Student
+import com.example.dnevnikskolekur_ana.other.*
 import kotlinx.android.synthetic.main.item_student.view.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -61,7 +62,8 @@ class StudentAdapter : RecyclerView.Adapter<StudentAdapter.StudnetViewHolder>(){
             val drawable = ResourcesCompat.getDrawable(resources, R.drawable.circle_shape, null)
             drawable?.let{
                 val wrappedDrawable = DrawableCompat.wrap(it)
-                val color = Color.parseColor("#${student.color}")
+                val average = student.sumOfMarks.toFloat()/student.answers.size
+                val color = Color.rgb(redColorMaker(average),greenColorMaker(average),0)
                 DrawableCompat.setTint(wrappedDrawable , color)
                 viewStudentColor.background = wrappedDrawable
             }
@@ -82,4 +84,6 @@ class StudentAdapter : RecyclerView.Adapter<StudentAdapter.StudnetViewHolder>(){
     public fun setOnItemClickListener(onItemClick : (Student) -> Unit) {
         this.onItemClickListener = onItemClick
     }
+
 }
+

@@ -86,10 +86,15 @@ class AddEditAnswersFragment : BaseFragment(R.layout.fragment_add_edit_answers) 
         if(oldAnswer != null && oldAnswer == newAnswer)
             return
         curStudent?.let { student ->
-            student.apply { answers = answers + newAnswer ; isSynced = false}
+            student.apply { answers = answers + newAnswer ; isSynced = false ; date = System.currentTimeMillis()}
             oldAnswer?.let { oldAnswer ->
-                viewModel.insertStudent(student.apply { answers = answers - oldAnswer })
-            }?: viewModel.insertStudent(student)
+                viewModel.insertStudent(
+                    student.apply {
+                        answers = answers - oldAnswer
+                        sumOfMarks = sumOfMarks + (newAnswer.mark - oldAnswer.mark)
+                    }
+                )
+            }?: viewModel.insertStudent(student.apply { sumOfMarks += newAnswer.mark })
 
         }
     }
@@ -111,6 +116,7 @@ class AddEditAnswersFragment : BaseFragment(R.layout.fragment_add_edit_answers) 
                         oldAnswer?.let { answer ->
                             spJuz.setSelection(answer.juz.juzNumber)
                             swRevision.isChecked = answer.revision
+                            spMark.setSelection(answer.mark-1)
                         }
                     }
                     Status.ERROR -> {

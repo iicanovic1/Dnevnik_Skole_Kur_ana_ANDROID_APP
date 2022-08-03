@@ -13,7 +13,7 @@ import com.androiddevs.ktornoteapp.ui.BaseFragment
 import com.example.dnevnikskolekur_ana.R
 import com.example.dnevnikskolekur_ana.data.local.entities.Access
 import com.example.dnevnikskolekur_ana.data.local.entities.Student
-import com.example.dnevnikskolekur_ana.other.Constants.DEFAULT_NOTE_COLOR
+import com.example.dnevnikskolekur_ana.other.Constants.DEFAULT_STUDENT_COLOR
 import com.example.dnevnikskolekur_ana.other.Constants.KEY_LOGGED_IN_EMAIL
 import com.example.dnevnikskolekur_ana.other.Constants.NO_EMAIL
 import com.example.dnevnikskolekur_ana.other.Status
@@ -32,7 +32,7 @@ class AddEditStudentFragment : BaseFragment(R.layout.fragment_add_edit_student) 
     private val args: AddEditStudentFragmentArgs by navArgs()
 
     private var curStudent: Student? = null
-    private var curStudentColor = DEFAULT_NOTE_COLOR
+    private var curStudentColor = DEFAULT_STUDENT_COLOR
 
     @Inject
     lateinit var sharedPref: SharedPreferences

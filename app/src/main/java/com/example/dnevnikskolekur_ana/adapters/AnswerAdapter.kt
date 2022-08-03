@@ -14,8 +14,9 @@ import com.example.dnevnikskolekur_ana.data.local.entities.Answer
 import com.example.dnevnikskolekur_ana.other.Constants
 import com.example.dnevnikskolekur_ana.other.Constants.AJEH
 import com.example.dnevnikskolekur_ana.other.Constants.JUZ
+import com.example.dnevnikskolekur_ana.other.greenColorMaker
+import com.example.dnevnikskolekur_ana.other.redColorMaker
 import kotlinx.android.synthetic.main.item_answer.view.*
-import kotlinx.android.synthetic.main.item_student.view.*
 import kotlinx.android.synthetic.main.item_student.view.tvDate
 import kotlinx.android.synthetic.main.item_student.view.tvTitle
 import kotlinx.android.synthetic.main.item_student.view.viewStudentColor
@@ -76,7 +77,7 @@ class AnswerAdapter : RecyclerView.Adapter<AnswerAdapter.AnswerViewHolder>(){
             val drawable = ResourcesCompat.getDrawable(resources, R.drawable.circle_shape, null)
             drawable?.let{
                 val wrappedDrawable = DrawableCompat.wrap(it)
-                val color = Color.parseColor("#${Constants.DEFAULT_NOTE_COLOR}")
+                val color = Color.rgb(redColorMaker(answer.mark.toFloat()), greenColorMaker(answer.mark.toFloat()),0)
                 DrawableCompat.setTint(wrappedDrawable , color)
                 viewStudentColor.background = wrappedDrawable
             }

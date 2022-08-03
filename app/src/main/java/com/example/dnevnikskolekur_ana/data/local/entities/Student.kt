@@ -10,11 +10,11 @@ data class Student (
     val name : String,
     val lastName : String,
     val content : String,
-    val date : Long,
+    var date : Long,
     val accessEmails : List<Access>,
     val color: String,
     var answers : List<Answer> = emptyList(),
-    val average : Float = 5F,
+    var sumOfMarks : Int = 0,
     @Expose(deserialize = false, serialize = false)
     var isSynced: Boolean = false,
     @PrimaryKey(autoGenerate = false)

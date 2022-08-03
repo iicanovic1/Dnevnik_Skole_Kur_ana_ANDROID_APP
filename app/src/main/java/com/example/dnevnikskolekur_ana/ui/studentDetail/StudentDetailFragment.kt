@@ -228,9 +228,10 @@ class StudentDetailFragment : BaseFragment(R.layout.fragment_student_detail) {
             val answer = answersAdapter.answers[position]
             curStudent?.let {  student ->
                 student.apply { answers = answers - answer ; isSynced = false}
-                viewModel.insertStudent(student)
+                viewModel.insertStudent(student.apply { sumOfMarks -= answer.mark })
                 Snackbar.make(requireView(),"Odgovor je uspješno obrisan", Snackbar.LENGTH_INDEFINITE).apply {
                     setAction("Otkaži"){
+                        student.apply { sumOfMarks += answer.mark }
                         viewModel.insertStudent(student.apply { answers = answers + answer ; isSynced = false } )
                     }
                     show()
