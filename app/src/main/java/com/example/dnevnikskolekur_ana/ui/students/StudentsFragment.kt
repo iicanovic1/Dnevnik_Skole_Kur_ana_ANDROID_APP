@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo.SCREEN_ORIENTATION_USER
 import android.graphics.Canvas
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.androiddevs.ktornoteapp.ui.BaseFragment
 import com.example.dnevnikskolekur_ana.R
 import com.example.dnevnikskolekur_ana.adapters.StudentAdapter
+import com.example.dnevnikskolekur_ana.data.local.entities.Student
 import com.example.dnevnikskolekur_ana.other.Constants.KEY_LOGGED_IN_EMAIL
 import com.example.dnevnikskolekur_ana.other.Constants.KEY_PASSWORD
 import com.example.dnevnikskolekur_ana.other.Constants.NO_EMAIL
@@ -24,6 +26,7 @@ import com.example.dnevnikskolekur_ana.other.Status
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_students.*
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -35,6 +38,7 @@ class StudentsFragment : BaseFragment(R.layout.fragment_students) {
     lateinit var  sharedPref: SharedPreferences
 
     private  lateinit var studentAdapter: StudentAdapter
+    private  lateinit var studentsList: List<Student>
 
     private val swipingItem =  MutableLiveData(false)
 
@@ -64,6 +68,7 @@ class StudentsFragment : BaseFragment(R.layout.fragment_students) {
                 when(result.status){
                     Status.SUCCESS -> {
                         studentAdapter.students = result.data!!
+                        studentsList = result.data
                         swipeRefreshLayout.isRefreshing = false
                     }
                     Status.ERROR -> {
@@ -74,12 +79,14 @@ class StudentsFragment : BaseFragment(R.layout.fragment_students) {
                         }
                         result.data?.let { students ->
                             studentAdapter.students = students
+                            studentsList = students
                         }
                         swipeRefreshLayout.isRefreshing = false
                     }
                     Status.LOADING -> { // prikaži sadržaj svakako iako loadaš jer ima lokalno u bazi dok se čeka
                         result.data?.let { students ->
                             studentAdapter.students = students
+                            studentsList = students
                         }
                         swipeRefreshLayout.isRefreshing = true
                     }
@@ -117,6 +124,7 @@ class StudentsFragment : BaseFragment(R.layout.fragment_students) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.miLogout -> logout()
+            R.id.search_action -> return true
         }
         return super.onOptionsItemSelected(item)
     }
@@ -127,6 +135,32 @@ class StudentsFragment : BaseFragment(R.layout.fragment_students) {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_students,menu)
+        inflater.inflate(R.menu.menu_search,menu)
+        val item = menu.findItem(R.id.search_action)
+        val searchView = item?.actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                onQueryTextChange(query)
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+
+                var tempStudentsList = mutableListOf<Student>()
+                val searchText = newText!!.toLowerCase(Locale.getDefault())
+                if (searchText.isNotEmpty()){
+                    studentsList.forEach {
+                        if (it.name.toLowerCase(Locale.getDefault()).contains(searchText)
+                                || it.lastName.toLowerCase(Locale.getDefault()).contains(searchText) )
+                            tempStudentsList.add(it)
+                    }
+                } else {
+                    tempStudentsList = studentsList.toMutableList()
+                }
+                studentAdapter.students= tempStudentsList
+                return false
+            }
+        })
     }
 
     // swipe refresh
