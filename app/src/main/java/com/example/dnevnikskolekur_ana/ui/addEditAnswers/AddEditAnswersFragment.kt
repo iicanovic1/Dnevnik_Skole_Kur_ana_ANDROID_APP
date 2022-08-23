@@ -83,19 +83,22 @@ class AddEditAnswersFragment : BaseFragment(R.layout.fragment_add_edit_answers) 
     }
 
     private fun addAnswerToCurStudent(newAnswer: Answer) {
+        // ako smo odabrali da uređujemo postojeći odgovor ali nismo napravili nikakve izmjene
         if(oldAnswer != null && oldAnswer == newAnswer)
             return
         curStudent?.let { student ->
+            // dodavanje novog odgovora studentu, označavanje da nije sinhronizovan i ažuriranje datuma zadnje izmjene
             student.apply { answers = answers + newAnswer ; isSynced = false ; date = System.currentTimeMillis()}
+            // ako samo mijenjamo odgovor, brišemo stari jer će izmjene biti spašene u novom
             oldAnswer?.let { oldAnswer ->
                 viewModel.insertStudent(
                     student.apply {
                         answers = answers - oldAnswer
-                        sumOfMarks = sumOfMarks + (newAnswer.mark - oldAnswer.mark)
+                        sumOfMarks = sumOfMarks + (newAnswer.mark - oldAnswer.mark) // ažuriranje ocjena
                     }
                 )
+                // ako je dodavanje odgovora samo uredi ocjene bez brisanja starog jer nije izmjena
             }?: viewModel.insertStudent(student.apply { sumOfMarks += newAnswer.mark })
-
         }
     }
 

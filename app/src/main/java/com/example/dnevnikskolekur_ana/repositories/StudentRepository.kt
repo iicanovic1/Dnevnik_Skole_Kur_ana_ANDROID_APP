@@ -118,7 +118,6 @@ class StudentRepository @Inject constructor(
 
     // refresh
 
-
     suspend fun syncStudents(){
         val locallyDeletedStudentIDs = studentDao.getAllLocallyDeletedStudentIDs()
         locallyDeletedStudentIDs.forEach{
@@ -128,7 +127,6 @@ class StudentRepository @Inject constructor(
         unsyncedStudents.forEach {
             student -> insertStudent(student)
         }
-
     }
 
     // dodavanje pristupa studentima
