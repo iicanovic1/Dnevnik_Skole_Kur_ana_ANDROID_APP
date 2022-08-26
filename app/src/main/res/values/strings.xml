@@ -1,4 +1,14 @@
 <resources>
-    <string name="app_name">Dnevnik Skole Kur_ana</string>
-    <string name="student_sync_status">sihronizirano</string>
+    <string name="app_name">Elektronski dnevnik</string>
+    <string name="student_sync_status">sinhronizovano</string>
+    <string name="login_title">Prijava sa postojećim računom</string>
+    <string name="register_title">Registrujte novi račun</string>
+    <string name="account_name_hint">Korisničko ime</string>
+    <string name="password_hint">Lozinka</string>
+    <string name="password_confirm_hint">Potvrda lozinke</string>
+    <string name="login_btn">Prijava</string>
+    <string name="register_btn">Registracija</string>
+    <string name="dont_have_account">Nemate račun?\nPovucite gore za registraciju!</string>
+    <string name="already_have_account">Već imate račun?\nPovucite dole za prijavu!</string>
+
 </resources>

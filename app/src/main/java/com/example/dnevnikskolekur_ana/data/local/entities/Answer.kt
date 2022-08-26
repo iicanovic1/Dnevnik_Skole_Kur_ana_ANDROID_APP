@@ -4,10 +4,10 @@ import java.util.*
 
 data class Answer(
     val type: AnswerType,
-    val juz: Juz,
-    val surah: Surah,
-    val ajehMin : Int?,
-    val ajehMax : Int?,
+    val section: Section,
+    val chapter: Chapter,
+    val sentenceMin : Int?,
+    val sentenceMax : Int?,
     val date: Long,
     val mark: Int,
     val id: String = UUID.randomUUID().toString(),

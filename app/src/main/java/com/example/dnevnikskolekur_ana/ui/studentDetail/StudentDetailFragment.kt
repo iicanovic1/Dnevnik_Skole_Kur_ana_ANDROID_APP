@@ -22,18 +22,17 @@ import com.example.dnevnikskolekur_ana.data.local.entities.Access
 import com.example.dnevnikskolekur_ana.data.local.entities.AnswerType
 import com.example.dnevnikskolekur_ana.data.local.entities.Student
 import com.example.dnevnikskolekur_ana.other.Constants
-import com.example.dnevnikskolekur_ana.other.Constants.AJEH
+import com.example.dnevnikskolekur_ana.other.Constants.SENTENCE
 import com.example.dnevnikskolekur_ana.other.Constants.ANSWER_TYPES
-import com.example.dnevnikskolekur_ana.other.Constants.JUZ
+import com.example.dnevnikskolekur_ana.other.Constants.SECTION
 import com.example.dnevnikskolekur_ana.other.Constants.NO_EMAIL
-import com.example.dnevnikskolekur_ana.other.Constants.SURAH
+import com.example.dnevnikskolekur_ana.other.Constants.CHAPTER
 import com.example.dnevnikskolekur_ana.other.Constants.TYPE_NULL
 import com.example.dnevnikskolekur_ana.other.Status
 import com.example.dnevnikskolekur_ana.ui.dialogs.AddAccessDialog
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_student_detail.*
-import kotlinx.android.synthetic.main.fragment_students.*
 import javax.inject.Inject
 
 const val ADD_ACCESS_DIALOG_TAG = "ADD_ACCESS_DIALOG_TAG"
@@ -108,14 +107,14 @@ class StudentDetailFragment : BaseFragment(R.layout.fragment_student_detail) {
                         TYPE_NULL -> {
                             answersAdapter.answers = student.answers
                         }
-                        JUZ -> {
-                            answersAdapter.answers = student.answers.filter { it.type == JUZ }
+                        SECTION -> {
+                            answersAdapter.answers = student.answers.filter { it.type == SECTION }
                         }
-                        SURAH -> {
-                            answersAdapter.answers = student.answers.filter { it.type == SURAH }
+                        CHAPTER -> {
+                            answersAdapter.answers = student.answers.filter { it.type == CHAPTER }
                         }
-                        AJEH -> {
-                            answersAdapter.answers = student.answers.filter { it.type == AJEH }
+                        SENTENCE -> {
+                            answersAdapter.answers = student.answers.filter { it.type == SENTENCE }
                         }
 
                     }

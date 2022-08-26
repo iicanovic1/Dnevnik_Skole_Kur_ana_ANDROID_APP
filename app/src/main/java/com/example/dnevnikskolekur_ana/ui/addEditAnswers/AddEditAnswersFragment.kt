@@ -11,13 +11,13 @@ import androidx.navigation.fragment.navArgs
 import com.androiddevs.ktornoteapp.ui.BaseFragment
 import com.example.dnevnikskolekur_ana.R
 import com.example.dnevnikskolekur_ana.data.local.entities.*
-import com.example.dnevnikskolekur_ana.other.Constants.AJEH
-import com.example.dnevnikskolekur_ana.other.Constants.JUZ
-import com.example.dnevnikskolekur_ana.other.Constants.JUZES
-import com.example.dnevnikskolekur_ana.other.Constants.JUZ_NULL
+import com.example.dnevnikskolekur_ana.other.Constants.SENTENCE
+import com.example.dnevnikskolekur_ana.other.Constants.SECTION
+import com.example.dnevnikskolekur_ana.other.Constants.SECTIONS
+import com.example.dnevnikskolekur_ana.other.Constants.Section_NULL
 import com.example.dnevnikskolekur_ana.other.Constants.MARKS
-import com.example.dnevnikskolekur_ana.other.Constants.SURAH
-import com.example.dnevnikskolekur_ana.other.Constants.SURAH_NULL
+import com.example.dnevnikskolekur_ana.other.Constants.CHAPTER
+import com.example.dnevnikskolekur_ana.other.Constants.Chapter_NULL
 import com.example.dnevnikskolekur_ana.other.Status
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_add_edit_answers.*
@@ -29,12 +29,12 @@ class AddEditAnswersFragment : BaseFragment(R.layout.fragment_add_edit_answers) 
     private val args: AddEditAnswersFragmentArgs by navArgs()
     private val viewModel: AddEditAnswersViewModel by viewModels()
 
-    var ajehMaxSelectedNumber : Int? = null
-    var ajehMinSelectedNumber : Int? = null
+    var sentenceMaxSelectedNumber : Int? = null
+    var sentenceMinSelectedNumber : Int? = null
 
     val marksList = MARKS
-    var surah = SURAH_NULL
-    var juz = JUZ_NULL
+    var chapter = Chapter_NULL
+    var section = Section_NULL
     var mark = marksList.size
 
     private var curStudent : Student? = null
@@ -62,21 +62,22 @@ class AddEditAnswersFragment : BaseFragment(R.layout.fragment_add_edit_answers) 
     }
 
     private fun saveAnswer(){
-        var answerType : AnswerType = JUZ
-        if (surah != SURAH_NULL){
-            if (ajehMinSelectedNumber == 1 && ajehMaxSelectedNumber == surah.numberOfAjat)
-                answerType = SURAH
+        var answerType : AnswerType = SECTION
+        if (chapter != Chapter_NULL){
+            if (sentenceMinSelectedNumber == 1 &&
+                    sentenceMaxSelectedNumber == chapter.numberOfSentences)
+                answerType = CHAPTER
             else
-                answerType = AJEH
+                answerType = SENTENCE
         }
         val revision = swRevision.isChecked
         val id = oldAnswer?.id ?: UUID.randomUUID().toString()
         val date = oldAnswer?.date ?:  System.currentTimeMillis()
-        val answer = Answer(answerType,juz,surah,ajehMinSelectedNumber,
-            ajehMaxSelectedNumber,date = date,mark, id = id, revision)
+        val answer = Answer(answerType, section, chapter, sentenceMinSelectedNumber,
+            sentenceMaxSelectedNumber, date = date, mark, id = id, revision)
 
-        if(answer.juz == JUZ_NULL){
-            showSnackbar("Odgovor nije spašen, morate odabrati barem džuz!")
+        if(answer.section == Section_NULL){
+            showSnackbar("Odgovor nije spašen, morate odabrati barem cjelinu!")
             return
         }
         addAnswerToCurStudent(answer)
@@ -117,7 +118,7 @@ class AddEditAnswersFragment : BaseFragment(R.layout.fragment_add_edit_answers) 
 
                         // ako je editovanje odgovora učitaj dzuz postojećeg odgovora
                         oldAnswer?.let { answer ->
-                            spJuz.setSelection(answer.juz.juzNumber)
+                            spJuz.setSelection(answer.section.sectionNumber)
                             swRevision.isChecked = answer.revision
                             spMark.setSelection(answer.mark-1)
                         }
@@ -137,7 +138,7 @@ class AddEditAnswersFragment : BaseFragment(R.layout.fragment_add_edit_answers) 
     // POSTAVKE SPINNERA
     private fun setupJuzSpinner() {
         // Punjenje spinnera za Džuzeve
-        val juzesList = JUZES
+        val juzesList = SECTIONS
         val juzesAdapter = ArrayAdapter(activity as Context, R.layout.support_simple_spinner_dropdown_item,juzesList)
         spJuz.adapter = juzesAdapter
 
@@ -146,16 +147,16 @@ class AddEditAnswersFragment : BaseFragment(R.layout.fragment_add_edit_answers) 
         spJuz.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
-                juz = adapterView?.getItemAtPosition(position) as Juz
+                section = adapterView?.getItemAtPosition(position) as Section
 
-                val surahList : List<Surah> = listOf(SURAH_NULL) + juz.surahs // ako nije odabran JUZ, odabrana sura je SURAH_NULL i odgovor se smatra da je samo za Džuz
+                val chapterList : List<Chapter> = listOf(Chapter_NULL) + section.chapters // ako nije odabran JUZ, odabrana sura je SURAH_NULL i odgovor se smatra da je samo za Džuz
 
-                val surahAdapter = ArrayAdapter(activity as Context, R.layout.support_simple_spinner_dropdown_item,surahList)
+                val surahAdapter = ArrayAdapter(activity as Context, R.layout.support_simple_spinner_dropdown_item,chapterList)
                 spSurah.adapter = surahAdapter
 
                 // ako je editovanje odgovora učitaj suru postojećeg odgovora
                 oldAnswer?.let { answer ->
-                    spSurah.setSelection(surahList.indexOf(answer.surah))
+                    spSurah.setSelection(chapterList.indexOf(answer.chapter))
                 }
             }
 
@@ -168,25 +169,25 @@ class AddEditAnswersFragment : BaseFragment(R.layout.fragment_add_edit_answers) 
         spSurah.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
-                surah = adapterView?.getItemAtPosition(position) as Surah
+                chapter = adapterView?.getItemAtPosition(position) as Chapter
                 // ako je odabrana sura SURAH_NULL onda nema ajeta i adapter se puni praznom listom
-                val ajehList = surah.numberOfAjat?.let { List(it,{1+it}) }
+                val ajehList = chapter.numberOfSentences?.let { List(it,{1+it}) }
                 val ajehAdapter = ArrayAdapter(activity as Context, R.layout.support_simple_spinner_dropdown_item,ajehList?: emptyList())
                 spAjehMin.adapter = ajehAdapter
                 spAjehMax.adapter = ajehAdapter
                 oldAnswer?.let { oldAnswer ->
-                    if (oldAnswer.type == AJEH && oldAnswer.surah == surah){
-                        spAjehMin.setSelection(oldAnswer.ajehMin!!-1)
-                        spAjehMax.setSelection(oldAnswer.ajehMax!!-1)
-                        ajehMinSelectedNumber = oldAnswer.ajehMin-1
-                        ajehMaxSelectedNumber = oldAnswer.ajehMax-1
+                    if (oldAnswer.type == SENTENCE && oldAnswer.chapter == chapter){
+                        spAjehMin.setSelection(oldAnswer.sentenceMin!!-1)
+                        spAjehMax.setSelection(oldAnswer.sentenceMax!!-1)
+                        sentenceMinSelectedNumber = oldAnswer.sentenceMin-1
+                        sentenceMaxSelectedNumber = oldAnswer.sentenceMax-1
                         return
                     }
                 }
                 ajehList?.let {
                     if(ajehList.isNotEmpty())
-                        ajehMaxSelectedNumber = ajehList.size - 1
-                        spAjehMax.setSelection(ajehMaxSelectedNumber?: return)
+                        sentenceMaxSelectedNumber = ajehList.size - 1
+                        spAjehMax.setSelection(sentenceMaxSelectedNumber?: return)
                 }
             }
 
@@ -199,10 +200,10 @@ class AddEditAnswersFragment : BaseFragment(R.layout.fragment_add_edit_answers) 
         spAjehMin.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 // ovaj dio nulira ajehMinSelectedNumber ako nije odabrana sura
-                ajehMinSelectedNumber = adapterView?.getItemAtPosition(position) as Int?
-                ajehMinSelectedNumber?.let {
-                    if(ajehMaxSelectedNumber!! < ajehMinSelectedNumber!!){
-                        spAjehMax.setSelection(ajehMinSelectedNumber!! - 1)
+                sentenceMinSelectedNumber = adapterView?.getItemAtPosition(position) as Int?
+                sentenceMinSelectedNumber?.let {
+                    if(sentenceMaxSelectedNumber!! < sentenceMinSelectedNumber!!){
+                        spAjehMax.setSelection(sentenceMinSelectedNumber!! - 1)
                     }
                 }
             }
@@ -216,10 +217,10 @@ class AddEditAnswersFragment : BaseFragment(R.layout.fragment_add_edit_answers) 
         spAjehMax.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 // ovaj dio nulira ajehMaxSelectedNumber ako nije odabrana sura
-                ajehMaxSelectedNumber = adapterView?.getItemAtPosition(position) as Int?
-                ajehMaxSelectedNumber?.let {
-                    if(ajehMaxSelectedNumber!! < ajehMinSelectedNumber!!){
-                        spAjehMin.setSelection(ajehMaxSelectedNumber!! - 1)
+                sentenceMaxSelectedNumber = adapterView?.getItemAtPosition(position) as Int?
+                sentenceMaxSelectedNumber?.let {
+                    if(sentenceMaxSelectedNumber!! < sentenceMinSelectedNumber!!){
+                        spAjehMin.setSelection(sentenceMaxSelectedNumber!! - 1)
                     }
                 }
             }

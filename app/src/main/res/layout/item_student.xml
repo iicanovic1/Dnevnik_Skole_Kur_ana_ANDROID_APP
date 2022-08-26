@@ -11,17 +11,20 @@
         android:id="@+id/viewStudentColor"
         android:layout_width="60dp"
         android:layout_height="match_parent"
-        android:background="@drawable/circle_shape"
+        android:background="@drawable/ic_book"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tvTitle"
         app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvTitle"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="10dp"
         android:text="Student Title"
         android:textColor="@android:color/white"
         android:textSize="30sp"

@@ -35,8 +35,8 @@ class AddAccessDialog : DialogFragment() {
             .setPositiveButton("Dodaj") { _, _ ->
                 val email = addAccessEditText.findViewById<EditText>(R.id.etAddAccessEmail).text.toString()
                 val edit = addAccessEditText.findViewById<CheckBox>(R.id.cbEditAccess).isChecked
-                positiveListener?.let {yes ->
-                    yes(Access(email, edit))
+                positiveListener?.let {addAccessToCurStudent ->
+                    addAccessToCurStudent(Access(email, edit))
                 }
             }
             .setNegativeButton("Odustani") {dialog, _ ->

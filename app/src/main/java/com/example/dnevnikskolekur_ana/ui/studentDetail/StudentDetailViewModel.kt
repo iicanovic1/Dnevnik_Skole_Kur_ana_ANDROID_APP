@@ -40,6 +40,4 @@ class StudentDetailViewModel @Inject constructor(
     fun insertStudent(student: Student) = GlobalScope.launch {
         repository.insertStudent(student)
     }
-
-
 }

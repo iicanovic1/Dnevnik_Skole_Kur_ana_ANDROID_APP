@@ -59,7 +59,7 @@ class StudentAdapter : RecyclerView.Adapter<StudentAdapter.StudnetViewHolder>(){
             val dateString = dateFormat.format(student.date)
             tvDate.text = dateString
 
-            val drawable = ResourcesCompat.getDrawable(resources, R.drawable.circle_shape, null)
+            val drawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_book, null)
             drawable?.let{
                 val wrappedDrawable = DrawableCompat.wrap(it)
                 val average = student.sumOfMarks.toFloat()/student.answers.size

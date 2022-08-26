@@ -11,9 +11,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dnevnikskolekur_ana.R
 import com.example.dnevnikskolekur_ana.data.local.entities.Answer
-import com.example.dnevnikskolekur_ana.other.Constants
-import com.example.dnevnikskolekur_ana.other.Constants.AJEH
-import com.example.dnevnikskolekur_ana.other.Constants.JUZ
+import com.example.dnevnikskolekur_ana.other.Constants.SENTENCE
+import com.example.dnevnikskolekur_ana.other.Constants.SECTION
 import com.example.dnevnikskolekur_ana.other.greenColorMaker
 import com.example.dnevnikskolekur_ana.other.redColorMaker
 import kotlinx.android.synthetic.main.item_answer.view.*
@@ -54,13 +53,13 @@ class AnswerAdapter : RecyclerView.Adapter<AnswerAdapter.AnswerViewHolder>(){
         val answer = answers[position]
         holder.itemView.apply {
             var name : String
-            if (answer.type == JUZ )
-                name = answer.juz.toString()
+            if (answer.type == SECTION )
+                name = answer.section.toString()
             else
-                name = answer.surah.toString()
+                name = answer.chapter.toString()
 
-            if (answer.type == AJEH )
-                name += " ${answer.ajehMin}-${answer.ajehMax}"
+            if (answer.type == SENTENCE )
+                name += " ${answer.sentenceMin}-${answer.sentenceMax}"
 
             tvTitle.text = name
             tvMark.text = answer.mark.toString()
@@ -74,7 +73,7 @@ class AnswerAdapter : RecyclerView.Adapter<AnswerAdapter.AnswerViewHolder>(){
                 ivRevision.setImageResource(R.drawable.ic_check)
 
 
-            val drawable = ResourcesCompat.getDrawable(resources, R.drawable.circle_shape, null)
+            val drawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_assignment, null)
             drawable?.let{
                 val wrappedDrawable = DrawableCompat.wrap(it)
                 val color = Color.rgb(redColorMaker(answer.mark.toFloat()), greenColorMaker(answer.mark.toFloat()),0)

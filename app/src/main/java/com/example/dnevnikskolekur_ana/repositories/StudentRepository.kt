@@ -33,7 +33,8 @@ class StudentRepository @Inject constructor(
                 Resource.error(response.body()?.message ?: response.message(),null)
             }
         }catch (e: Exception){
-            Resource.error("Nije moguće kontaktirati server. Provjerite internet konekciju!",null)
+            Resource.error("Nije moguće kontaktirati server. Provjerite internet konekciju!",
+                null)
         }
     }
 
@@ -46,7 +47,8 @@ class StudentRepository @Inject constructor(
                 Resource.error(response.body()?.message ?: response.message(),null)
             }
         }catch (e: Exception){
-            Resource.error("Nije moguće kontaktirati server. Provjerite internet konekciju!",null)
+            Resource.error("Nije moguće kontaktirati server. Provjerite internet konekciju!"
+                ,null)
         }
     }
 

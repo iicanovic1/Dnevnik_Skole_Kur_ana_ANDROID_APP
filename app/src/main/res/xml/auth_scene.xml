@@ -36,7 +36,7 @@
 
             <CustomAttribute
                 motion:attributeName="Text"
-                motion:customStringValue="Nemate profil?\nPovucite gore za registraciju!" />
+                motion:customStringValue="@string/dont_have_account" />
         </Constraint>
         <Constraint
             android:layout_height="wrap_content"
@@ -93,7 +93,7 @@
         <Constraint android:id="@id/tvRegisterText">
             <CustomAttribute
                 motion:attributeName="Text"
-                motion:customStringValue="Već imate profil?\nPovucite dole za prijavu!" />
+                motion:customStringValue="@string/already_have_account" />
         </Constraint>
 
         <Constraint
