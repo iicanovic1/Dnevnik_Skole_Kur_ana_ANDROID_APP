@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.androiddevs.ktornoteapp.ui.BaseFragment
 import com.example.dnevnikskolekur_ana.R
 import com.example.dnevnikskolekur_ana.adapters.AnswerAdapter
+import com.example.dnevnikskolekur_ana.adapters.SpinnerAdapter
 import com.example.dnevnikskolekur_ana.data.local.entities.Access
 import com.example.dnevnikskolekur_ana.data.local.entities.AnswerType
 import com.example.dnevnikskolekur_ana.data.local.entities.Student
@@ -59,14 +60,6 @@ class StudentDetailFragment : BaseFragment(R.layout.fragment_student_detail) {
         setupRecyclerView()
         setupTypeSpinner()
 
-        fabEditStudent.setOnClickListener {
-            if(hasEditAccess()){
-                findNavController().navigate(
-                        StudentDetailFragmentDirections.actionStudentDetailFragmentToAddEditStudentFragment(args.id)
-                )
-            }
-        }
-
         fabAddAnswersToStudent.setOnClickListener {
             findNavController().navigate(
                 StudentDetailFragmentDirections.actionStudentDetailFragmentToAddEditAnswersFragment(args.id,"")
@@ -89,12 +82,19 @@ class StudentDetailFragment : BaseFragment(R.layout.fragment_student_detail) {
 
     }
 
+    private fun navigateToEditStudentFragment(){
+        if(hasEditAccess()){
+            findNavController().navigate(
+                StudentDetailFragmentDirections.actionStudentDetailFragmentToAddEditStudentFragment(args.id)
+            )
+        }
+    }
+
     // POSTAVKE SPINNERA
     private fun setupTypeSpinner() {
         // Punjenje spinnera za Tipove
         val typesList = ANSWER_TYPES
-        val typesAdapter = ArrayAdapter(activity as Context, R.layout.spinner_item,
-            typesList)
+        val typesAdapter = SpinnerAdapter(activity as Context, typesList)
         spAnswerType.adapter = typesAdapter
 
         spAnswerType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -161,7 +161,7 @@ class StudentDetailFragment : BaseFragment(R.layout.fragment_student_detail) {
                 curStudent = student
                 if(!hasEditAccess()){
                     setHasOptionsMenu(false)
-                    fabEditStudent.hide()
+                    //ovdje sakri editovanje
                     fabAddAnswersToStudent.hide()
                 }
                 answersAdapter.answers = student.answers
@@ -196,6 +196,7 @@ class StudentDetailFragment : BaseFragment(R.layout.fragment_student_detail) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.miAddAccess -> showAddAccessDialog()
+            R.id.miEditStudent -> navigateToEditStudentFragment()
         }
         return super.onOptionsItemSelected(item)
     }

@@ -2,10 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item android:id="@+id/miEditStudent"
+        app:showAsAction="always"
+        android:title="Izmjeni učenika"
+        android:icon="@drawable/ic_edit"
+        />
 
     <item android:id="@+id/miAddAccess"
         app:showAsAction="always"
         android:title="Dodaj pristup ovom studnetu"
         android:icon="@drawable/ic_add_person"
         />
+
+
 </menu>

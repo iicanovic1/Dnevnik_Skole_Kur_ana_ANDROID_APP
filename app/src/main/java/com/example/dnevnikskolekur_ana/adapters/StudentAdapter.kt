@@ -1,6 +1,7 @@
 package com.example.dnevnikskolekur_ana.adapters
 
 import android.graphics.Color
+import android.provider.Settings.Global.getString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,11 +50,11 @@ class StudentAdapter : RecyclerView.Adapter<StudentAdapter.StudnetViewHolder>(){
             tvTitle.text = student.name + " " + student.lastName
             if(!student.isSynced){
                 ivSynced.setImageResource(R.drawable.ic_cross)
-                tvSynced.text = "Nije sihronizovano"
+                tvSynced.text = "Nije sinhronizovano"
             }else
             {
                 ivSynced.setImageResource(R.drawable.ic_check)
-                tvSynced.text = "Sihronizovano"
+                tvSynced.text = "Sinhronizovano"
             }
             val dateFormat = SimpleDateFormat("dd.MM.yy, HH:mm", Locale.getDefault())
             val dateString = dateFormat.format(student.date)

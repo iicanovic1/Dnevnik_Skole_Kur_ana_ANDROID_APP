@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="70dp"
-    android:background="#303030"
+    android:background="@drawable/border"
     android:clickable="false">
 
     <View
         android:id="@+id/viewStudentColor"
         android:layout_width="40dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
         android:layout_height="match_parent"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginStart="5dp"
         android:background="@drawable/ic_assignment"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/tvTitle"
@@ -23,14 +24,14 @@
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
+        android:ellipsize="end"
+        android:lines="1"
         android:text="Answer Title"
         android:textColor="@android:color/white"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:ellipsize="end"
-        android:lines="1"
         app:layout_constraintBottom_toTopOf="@id/tvDate"
         app:layout_constraintStart_toEndOf="@+id/viewStudentColor"
         app:layout_constraintTop_toTopOf="parent" />
@@ -41,13 +42,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="3dp"
+        android:layout_marginEnd="10dp"
+        android:ellipsize="end"
+        android:lines="1"
         android:text="Mark"
         android:textColor="@android:color/white"
         android:textSize="30sp"
         android:textStyle="bold"
-        android:ellipsize="end"
-        android:lines="1"
-        android:layout_marginEnd="10dp"
         app:layout_constraintBottom_toTopOf="@id/ivRevision"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -56,24 +57,23 @@
         android:id="@+id/ivRevision"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:layout_marginRight="11dp"
+        android:layout_marginBottom="5dp"
         android:src="@drawable/ic_check"
-        android:layout_marginRight="15dp"
-        android:layout_marginBottom="3dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvMark" />
-
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="5dp"
         android:layout_marginBottom="10dp"
         android:text="DATE"
         android:textColor="@android:color/secondary_text_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/viewStudentColor"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle"  />
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Elektronski dnevnik</string>
-    <string name="student_sync_status">sinhronizovano</string>
     <string name="login_title">Prijava sa postojećim računom</string>
     <string name="register_title">Registrujte novi račun</string>
     <string name="account_name_hint">Korisničko ime</string>
@@ -10,5 +9,7 @@
     <string name="register_btn">Registracija</string>
     <string name="dont_have_account">Nemate račun?\nPovucite gore za registraciju!</string>
     <string name="already_have_account">Već imate račun?\nPovucite dole za prijavu!</string>
+    <string name="synced">Sinhronizovano</string>
+
 
 </resources>

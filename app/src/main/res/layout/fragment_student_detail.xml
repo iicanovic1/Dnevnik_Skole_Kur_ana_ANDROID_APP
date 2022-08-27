@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/mediumDarkBackground"
-    android:padding="10dp">
+    android:padding="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clStudentContainer"
@@ -24,23 +24,27 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvStudentTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:hint="IME I PREZIME"
             android:textColor="@android:color/white"
-            android:textSize="30sp"
+            android:textSize="40sp"
             android:textStyle="bold"
+            android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/scrollView"/>
 
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:clickable="false"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
             android:layout_marginTop="10dp"
-            app:layout_constraintBottom_toTopOf="@id/rvAnswers"
+            app:layout_constraintBottom_toTopOf="@id/spAnswerType"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -49,28 +53,31 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tvStudentContent"
-                android:layout_width="wrap_content"
-                android:layout_height="200dp"
-                android:clickable="false"
+                android:layout_width="match_parent"
+                android:textAlignment="center"
+                android:maxHeight="200dp"
+                android:textSize="20sp"
+                android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </ScrollView>
 
-        <Spinner
+        <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/spAnswerType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@color/purple_200"
-            android:hapticFeedbackEnabled="true"
-            android:textColor="#FFFFFF"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             app:layout_constraintBottom_toTopOf="@+id/rvAnswers"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/scrollView" />
+            app:layout_constraintTop_toBottomOf="@id/scrollView"
+            app:layout_constraintHorizontal_bias="0.188"
+            app:layout_constraintVertical_bias="0.0" />
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvAnswers"
@@ -78,7 +85,8 @@
             android:layout_height="0dp"
             android:layout_weight="9"
             android:clickable="false"
-            android:layout_marginBottom="45dp"
+            android:layout_marginBottom="55dp"
+            android:layout_marginTop="20dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/spAnswerType" />
@@ -86,21 +94,10 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabEditStudent"
-        android:layout_width="85dp"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorAccent"
-        android:contentDescription="Uredi"
-        app:fabSize="normal"
-        app:layout_anchor="@id/clStudentContainer"
-        app:layout_anchorGravity="bottom|left|end"
-        app:srcCompat="@drawable/ic_edit" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddAnswersToStudent"
         android:layout_width="85dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorAccent"
+        android:backgroundTint="@color/primaryColor"
         app:fabSize="normal"
         app:layout_anchor="@id/clStudentContainer"
         app:layout_anchorGravity="bottom|right|end"

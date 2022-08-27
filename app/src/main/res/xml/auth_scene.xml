@@ -29,7 +29,7 @@
 
             <CustomAttribute
                 motion:attributeName="backgroundColor"
-                motion:customColorValue="@color/lightBackground" />
+                motion:customColorValue="@color/primaryLightColor" />
         </Constraint>
 
         <Constraint android:id="@id/tvRegisterText">
@@ -69,7 +69,7 @@
 
             <CustomAttribute
                 motion:attributeName="backgroundColor"
-                motion:customColorValue="@color/lightBackground" />
+                motion:customColorValue="@color/primaryDarkColor" />
         </Constraint>
 
         <Constraint

@@ -14,5 +14,14 @@
     <color name="darkBackground">#202020</color>
     <color name="lightBackground">#404040</color>
     <color name="myColor">#FFFB00</color>
-    <color name="text_myColor">#D234ADBC</color>
+
+    <color name="primaryColor">#78909c</color>
+    <color name="primaryLightColor">#a7c0cd</color>
+    <color name="primaryDarkColor">#4b636e</color>
+    <color name="primaryTextColor">#000000</color>
+
+    <color name="primaryNightColor">#455a64</color>
+    <color name="primaryNightLightColor">#718792</color>
+    <color name="primaryNightDarkColor">#1c313a</color>
+    <color name="primaryNightTextColor">#ffffff</color>
 </resources>

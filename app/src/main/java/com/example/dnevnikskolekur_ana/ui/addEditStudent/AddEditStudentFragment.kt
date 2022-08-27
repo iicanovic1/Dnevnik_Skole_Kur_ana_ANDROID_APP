@@ -40,37 +40,19 @@ class AddEditStudentFragment : BaseFragment(R.layout.fragment_add_edit_student) 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if(args.id.isNotEmpty()){
+        if (args.id.isNotEmpty()) {
             viewModel.getStudentById(args.id)
             subscribeToObservers()
         }
 
-        viewStudentColor.setOnClickListener {
-            ColorPickerDialogFragment().apply {
-                setPositiveListener {
-                    changeViewStudnetColor(it)
-                }
-            }.show(parentFragmentManager, FRAGMENT_TAG)
-        }
-
-        if(savedInstanceState != null) {
-            val colorPickerDialog = parentFragmentManager.findFragmentByTag(FRAGMENT_TAG)
-                    as ColorPickerDialogFragment?
-            colorPickerDialog?.setPositiveListener {
-                changeViewStudnetColor(it)
-            }
-        }
-    }
-
-    private fun changeViewStudnetColor(colorString : String) {
-        val drawable = ResourcesCompat.getDrawable(resources, R.drawable.circle_shape, null)
+        val drawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_book, null)
         drawable?.let{
             val wrappedDrawable = DrawableCompat.wrap(it)
-            val color = Color.parseColor("#${colorString}")
+            val color = Color.parseColor("#78909c")
             DrawableCompat.setTint(wrappedDrawable , color)
-            viewStudentColor.background = wrappedDrawable
-            curStudentColor = colorString
+            ic_book.background = wrappedDrawable
         }
+
     }
 
     private fun subscribeToObservers(){
@@ -83,7 +65,6 @@ class AddEditStudentFragment : BaseFragment(R.layout.fragment_add_edit_student) 
                         etStudentName.setText(student.name)
                         etStudentLastName.setText(student.lastName)
                         etStudentContent.setText(student.content)
-                        changeViewStudnetColor(student.color)
                     }
                     Status.ERROR -> {
                         showSnackbar(result.message ?: "Student nije pronađen")

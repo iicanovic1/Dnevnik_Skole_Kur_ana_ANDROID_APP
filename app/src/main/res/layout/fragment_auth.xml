@@ -36,7 +36,7 @@
         android:alpha="1"
         android:text="@string/login_title"
         android:textAlignment="center"
-        android:textColor="@color/text_myColor"
+        android:textColor="@color/primaryDarkColor"
         android:textSize="26sp"
         app:layout_constraintBottom_toTopOf="@id/tilLoginEmail"
         app:layout_constraintEnd_toEndOf="parent"
@@ -208,9 +208,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:alpha="0"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvRegisterTitle" >
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvRegisterTitle">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etRegisterPasswordConfirm"
@@ -218,10 +218,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="@string/password_confirm_hint"
-            android:textColorHint="@android:color/tertiary_text_light"
             android:inputType="textPassword"
             android:padding="16dp"
-            android:textColor="@android:color/white"/>
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/tertiary_text_light" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
