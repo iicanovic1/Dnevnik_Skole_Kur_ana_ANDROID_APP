@@ -9,7 +9,7 @@ import com.example.dnevnikskolekur_ana.R
 import com.example.dnevnikskolekur_ana.data.local.entities.AnswerType
 import kotlinx.android.synthetic.main.spinner_item.view.*
 
-class SpinnerAdapter(context: Context, countryList: List<AnswerType>) : ArrayAdapter<AnswerType>(context, 0, countryList) {
+class AnswerTypeSpinnerAdapter(context: Context, answerTypeList: List<AnswerType>) : ArrayAdapter<AnswerType>(context, 0, answerTypeList) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         return initView(position, convertView, parent)

@@ -10,6 +10,9 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import com.androiddevs.ktornoteapp.ui.BaseFragment
 import com.example.dnevnikskolekur_ana.R
+import com.example.dnevnikskolekur_ana.adapters.ChapterSpinnerAdapter
+import com.example.dnevnikskolekur_ana.adapters.IntegerSpinnerAdapter
+import com.example.dnevnikskolekur_ana.adapters.SectionSpinnerAdapter
 import com.example.dnevnikskolekur_ana.data.local.entities.*
 import com.example.dnevnikskolekur_ana.other.Constants.SENTENCE
 import com.example.dnevnikskolekur_ana.other.Constants.SECTION
@@ -44,9 +47,9 @@ class AddEditAnswersFragment : BaseFragment(R.layout.fragment_add_edit_answers) 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupJuzSpinner()
+        setupSectionSpinner()
         setupSurahSpinner()
-        setupAjehSpinners()
+        setupSentenceSpinners()
         setupMarkSpinner()
 
         if(args.studentID.isNotEmpty()){
@@ -118,7 +121,7 @@ class AddEditAnswersFragment : BaseFragment(R.layout.fragment_add_edit_answers) 
 
                         // ako je editovanje odgovora učitaj dzuz postojećeg odgovora
                         oldAnswer?.let { answer ->
-                            spJuz.setSelection(answer.section.sectionNumber)
+                            spSection.setSelection(answer.section.sectionNumber)
                             swRevision.isChecked = answer.revision
                             spMark.setSelection(answer.mark-1)
                         }
@@ -136,27 +139,27 @@ class AddEditAnswersFragment : BaseFragment(R.layout.fragment_add_edit_answers) 
 
 
     // POSTAVKE SPINNERA
-    private fun setupJuzSpinner() {
+    private fun setupSectionSpinner() {
         // Punjenje spinnera za Džuzeve
-        val juzesList = SECTIONS
-        val juzesAdapter = ArrayAdapter(activity as Context, R.layout.support_simple_spinner_dropdown_item,juzesList)
-        spJuz.adapter = juzesAdapter
+        val sectionList = SECTIONS
+        val sectionAdapter = SectionSpinnerAdapter(activity as Context,sectionList)
+        spSection.adapter = sectionAdapter
 
 
         // Punjenje spinnera za Sure nakon odabira JUZA
-        spJuz.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        spSection.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
                 section = adapterView?.getItemAtPosition(position) as Section
 
                 val chapterList : List<Chapter> = listOf(Chapter_NULL) + section.chapters // ako nije odabran JUZ, odabrana sura je SURAH_NULL i odgovor se smatra da je samo za Džuz
 
-                val surahAdapter = ArrayAdapter(activity as Context, R.layout.support_simple_spinner_dropdown_item,chapterList)
-                spSurah.adapter = surahAdapter
+                val chapterAdapter = ChapterSpinnerAdapter(activity as Context,chapterList)
+                spChapter.adapter = chapterAdapter
 
                 // ako je editovanje odgovora učitaj suru postojećeg odgovora
                 oldAnswer?.let { answer ->
-                    spSurah.setSelection(chapterList.indexOf(answer.chapter))
+                    spChapter.setSelection(chapterList.indexOf(answer.chapter))
                 }
             }
 
@@ -166,28 +169,28 @@ class AddEditAnswersFragment : BaseFragment(R.layout.fragment_add_edit_answers) 
 
     private fun setupSurahSpinner(){
         // Punjenje spinnera za Ajete(min i max) nakon odabira SURE
-        spSurah.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        spChapter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
                 chapter = adapterView?.getItemAtPosition(position) as Chapter
                 // ako je odabrana sura SURAH_NULL onda nema ajeta i adapter se puni praznom listom
-                val ajehList = chapter.numberOfSentences?.let { List(it,{1+it}) }
-                val ajehAdapter = ArrayAdapter(activity as Context, R.layout.support_simple_spinner_dropdown_item,ajehList?: emptyList())
-                spAjehMin.adapter = ajehAdapter
-                spAjehMax.adapter = ajehAdapter
+                val sentenceList = chapter.numberOfSentences?.let { List(it,{1+it}) }
+                val sentenceAdapter = IntegerSpinnerAdapter(activity as Context,sentenceList?: emptyList())
+                spSentenceMin.adapter = sentenceAdapter
+                spSentenceMax.adapter = sentenceAdapter
                 oldAnswer?.let { oldAnswer ->
                     if (oldAnswer.type == SENTENCE && oldAnswer.chapter == chapter){
-                        spAjehMin.setSelection(oldAnswer.sentenceMin!!-1)
-                        spAjehMax.setSelection(oldAnswer.sentenceMax!!-1)
+                        spSentenceMin.setSelection(oldAnswer.sentenceMin!!-1)
+                        spSentenceMax.setSelection(oldAnswer.sentenceMax!!-1)
                         sentenceMinSelectedNumber = oldAnswer.sentenceMin-1
                         sentenceMaxSelectedNumber = oldAnswer.sentenceMax-1
                         return
                     }
                 }
-                ajehList?.let {
-                    if(ajehList.isNotEmpty())
-                        sentenceMaxSelectedNumber = ajehList.size - 1
-                        spAjehMax.setSelection(sentenceMaxSelectedNumber?: return)
+                sentenceList?.let {
+                    if(sentenceList.isNotEmpty())
+                        sentenceMaxSelectedNumber = sentenceList.size - 1
+                        spSentenceMax.setSelection(sentenceMaxSelectedNumber?: return)
                 }
             }
 
@@ -195,15 +198,15 @@ class AddEditAnswersFragment : BaseFragment(R.layout.fragment_add_edit_answers) 
         }
     }
 
-    private fun setupAjehSpinners(){
+    private fun setupSentenceSpinners(){
         // Kontrola da li je nakon odabira Min ajeta on manji od max ajeta
-        spAjehMin.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        spSentenceMin.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 // ovaj dio nulira ajehMinSelectedNumber ako nije odabrana sura
                 sentenceMinSelectedNumber = adapterView?.getItemAtPosition(position) as Int?
                 sentenceMinSelectedNumber?.let {
                     if(sentenceMaxSelectedNumber!! < sentenceMinSelectedNumber!!){
-                        spAjehMax.setSelection(sentenceMinSelectedNumber!! - 1)
+                        spSentenceMax.setSelection(sentenceMinSelectedNumber!! - 1)
                     }
                 }
             }
@@ -214,13 +217,13 @@ class AddEditAnswersFragment : BaseFragment(R.layout.fragment_add_edit_answers) 
 
 
         // Kontrola da li je nakon odabira Max ajeta on veći od min ajeta
-        spAjehMax.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        spSentenceMax.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 // ovaj dio nulira ajehMaxSelectedNumber ako nije odabrana sura
                 sentenceMaxSelectedNumber = adapterView?.getItemAtPosition(position) as Int?
                 sentenceMaxSelectedNumber?.let {
                     if(sentenceMaxSelectedNumber!! < sentenceMinSelectedNumber!!){
-                        spAjehMin.setSelection(sentenceMaxSelectedNumber!! - 1)
+                        spSentenceMin.setSelection(sentenceMaxSelectedNumber!! - 1)
                     }
                 }
             }
@@ -232,7 +235,7 @@ class AddEditAnswersFragment : BaseFragment(R.layout.fragment_add_edit_answers) 
 
     private fun setupMarkSpinner(){
         // Punjenje spinnera za Ocjene
-        val marksAdapter = ArrayAdapter(activity as Context, R.layout.support_simple_spinner_dropdown_item,marksList)
+        val marksAdapter = IntegerSpinnerAdapter(activity as Context,marksList)
         spMark.adapter = marksAdapter
         spMark.setSelection(marksList.size-1)
 

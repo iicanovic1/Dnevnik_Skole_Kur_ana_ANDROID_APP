@@ -3,78 +3,135 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/mediumDarkBackground">
 
 
     <Spinner
-        android:id="@+id/spJuz"
+        android:id="@+id/spSection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        app:layout_constraintBottom_toTopOf="@+id/spSurah"
+        app:layout_constraintBottom_toTopOf="@+id/spChapter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
-        android:id="@+id/spSurah"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
+        android:id="@+id/spChapter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/spAjehMin"
-        app:layout_constraintTop_toBottomOf="@id/spJuz"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        app:layout_constraintBottom_toTopOf="@id/spSentenceMin"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spSection" />
 
     <Spinner
-        android:id="@+id/spAjehMin"
+        android:id="@+id/spSentenceMin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="5dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/spMark"
-        app:layout_constraintEnd_toStartOf="@id/spAjehMax"
+        app:layout_constraintEnd_toStartOf="@id/spSentenceMax"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spSurah"
- />
+        app:layout_constraintTop_toBottomOf="@+id/spChapter" />
+
     <Spinner
-        android:id="@+id/spAjehMax"
+        android:id="@+id/spSentenceMax"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="50dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/spMark"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/spAjehMin"
-        app:layout_constraintTop_toBottomOf="@+id/spSurah"
-        />
+        app:layout_constraintStart_toEndOf="@id/spSentenceMin"
+        app:layout_constraintTop_toBottomOf="@+id/spChapter" />
 
     <Spinner
         android:id="@+id/spMark"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/swRevision"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginLeft="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/spSentenceMin"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spAjehMin"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/spSentenceMin" />
 
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/swRevision"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textOn="Ponavljanje"
-        android:textOff="Novo"
-        android:scaleX="2"
-        android:scaleY="2"
-        app:layout_constraintTop_toBottomOf="@id/spMark"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="50dp"
+        android:thumb="@drawable/thumb"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteX="164dp"
-        tools:layout_editor_absoluteY="643dp" />
+        app:layout_constraintStart_toStartOf="@id/spSentenceMax"
+        app:layout_constraintTop_toBottomOf="@id/spSentenceMax"
+        app:track="@drawable/track" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvMark"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:hint="@string/mark_hint"
+        android:textColor="@color/primaryDarkColor"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@id/spMark"
+        app:layout_constraintEnd_toEndOf="@id/spMark"
+        app:layout_constraintStart_toStartOf="@id/spMark" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvSection"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:hint="@string/section_hint"
+        android:textColor="@color/primaryDarkColor"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@id/spSection"
+        app:layout_constraintEnd_toEndOf="@id/spSection"
+        app:layout_constraintStart_toStartOf="@id/spSection" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvChapter"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:hint="@string/chapter_hint"
+        android:textColor="@color/primaryDarkColor"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@id/spChapter"
+        app:layout_constraintEnd_toEndOf="@id/spChapter"
+        app:layout_constraintStart_toStartOf="@id/spChapter" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvMin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:hint="@string/min_hint"
+        android:textColor="@color/primaryDarkColor"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@id/spSentenceMin"
+        app:layout_constraintEnd_toEndOf="@id/spSentenceMin"
+        app:layout_constraintStart_toStartOf="@id/spSentenceMin" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvMax"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:hint="@string/max_hint"
+        android:textColor="@color/primaryDarkColor"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@id/spSentenceMax"
+        app:layout_constraintEnd_toEndOf="@id/spSentenceMax"
+        app:layout_constraintStart_toStartOf="@id/spSentenceMax" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

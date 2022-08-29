@@ -6,7 +6,6 @@ import android.graphics.Canvas
 import android.os.Bundle
 import android.view.*
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -18,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.androiddevs.ktornoteapp.ui.BaseFragment
 import com.example.dnevnikskolekur_ana.R
 import com.example.dnevnikskolekur_ana.adapters.AnswerAdapter
-import com.example.dnevnikskolekur_ana.adapters.SpinnerAdapter
+import com.example.dnevnikskolekur_ana.adapters.AnswerTypeSpinnerAdapter
 import com.example.dnevnikskolekur_ana.data.local.entities.Access
 import com.example.dnevnikskolekur_ana.data.local.entities.AnswerType
 import com.example.dnevnikskolekur_ana.data.local.entities.Student
@@ -94,7 +93,7 @@ class StudentDetailFragment : BaseFragment(R.layout.fragment_student_detail) {
     private fun setupTypeSpinner() {
         // Punjenje spinnera za Tipove
         val typesList = ANSWER_TYPES
-        val typesAdapter = SpinnerAdapter(activity as Context, typesList)
+        val typesAdapter = AnswerTypeSpinnerAdapter(activity as Context, typesList)
         spAnswerType.adapter = typesAdapter
 
         spAnswerType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {

@@ -32,7 +32,7 @@
             android:id="@+id/etStudentName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Ime"
+            android:hint="@string/name_hint"
             android:textAlignment="center"
             android:inputType="textPersonName"
             android:padding="16dp" />
@@ -55,7 +55,7 @@
             android:id="@+id/etStudentLastName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Prezime"
+            android:hint="@string/surename_hint"
             android:textAlignment="center"
             android:textColorHint="@android:color/tertiary_text_light"
             android:inputType="textPersonName"
@@ -82,7 +82,7 @@
             android:id="@+id/etStudentContent"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Ovdje unijeti detalje o učeniku"
+            android:hint="@string/details_hint"
             android:inputType="textAutoComplete|textMultiLine"
             android:textColorHint="@android:color/tertiary_text_light"
             android:padding="16dp" />

@@ -10,6 +10,15 @@
     <string name="dont_have_account">Nemate račun?\nPovucite gore za registraciju!</string>
     <string name="already_have_account">Već imate račun?\nPovucite dole za prijavu!</string>
     <string name="synced">Sinhronizovano</string>
+    <string name="name_hint">Ime</string>
+    <string name="surename_hint">Prezime</string>
+    <string name="details_hint">Ovdje unijeti detalje o učeniku</string>
+    <string name="mark_hint">Ocjena</string>
+    <string name="section_hint">Cjelina</string>
+    <string name="chapter_hint">Poglavlje</string>
+    <string name="min_hint">Min</string>
+    <string name="max_hint">Max</string>
+    <string name="add_access_text">Dodaj kao profesora (omogućava izmjenje nad studentom)</string>
 
 
 </resources>
