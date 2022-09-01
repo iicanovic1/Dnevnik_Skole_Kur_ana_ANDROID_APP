@@ -29,8 +29,8 @@ class AddAccessDialog : DialogFragment() {
        ) as TextInputLayout
         return MaterialAlertDialogBuilder(requireContext())
             .setIcon(R.drawable.ic_add_person)
-            .setTitle("Dodaj pristup studentu")
-            .setMessage("Unesite E-mail")
+            .setTitle("Dodaj pristup učeniku")
+            .setMessage("Unesite korisničko ime")
             .setView(addAccessEditText)
             .setPositiveButton("Dodaj") { _, _ ->
                 val email = addAccessEditText.findViewById<EditText>(R.id.etAddAccessEmail).text.toString()

@@ -86,6 +86,8 @@ class StudentDetailFragment : BaseFragment(R.layout.fragment_student_detail) {
             findNavController().navigate(
                 StudentDetailFragmentDirections.actionStudentDetailFragmentToAddEditStudentFragment(args.id)
             )
+        } else {
+            showSnackbar("Nemate pravo da uređujete profil ovoga učenika!")
         }
     }
 
@@ -140,7 +142,7 @@ class StudentDetailFragment : BaseFragment(R.layout.fragment_student_detail) {
                 when(result.status) {
                     Status.SUCCESS -> {
                         progressBar.visibility = View.GONE
-                        showSnackbar(result.data?:"Uspješno dodan pristup studnetu")
+                        showSnackbar(result.data?:"Uspješno dodan pristup učeniku")
                     }
                     Status.ERROR -> {
                         progressBar.visibility = View.GONE
@@ -159,18 +161,21 @@ class StudentDetailFragment : BaseFragment(R.layout.fragment_student_detail) {
                 tvStudentContent.text = student.content
                 curStudent = student
                 if(!hasEditAccess()){
-                    setHasOptionsMenu(false)
-                    //ovdje sakri editovanje
+                    //setHasOptionsMenu(false)
                     fabAddAnswersToStudent.hide()
                 }
                 answersAdapter.answers = student.answers
-            }?: showSnackbar("Student nije pronađen")
+            }?: showSnackbar("Učenik nije pronađen")
         })
     }
 
     private fun addAccessToCurStudent(access: Access) {
-        curStudent?.let { student ->
-            viewModel.addAccessToStudent(student.id, access)
+        if(hasEditAccess() || access.edit == false){
+            curStudent?.let { student ->
+                viewModel.addAccessToStudent(student.id, access)
+            }
+        } else {
+            showSnackbar("Nemate pravo izvršenja za ovu radnju!")
         }
     }
 

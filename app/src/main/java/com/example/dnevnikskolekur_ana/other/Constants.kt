@@ -9,7 +9,7 @@ object Constants {
 
     const val DATABASE_NAME = "students_db"
 
-    const val BASE_URL = "https://192.168.1.7:8002" // Retrofit spajanje na server
+    const val BASE_URL = "https://192.168.1.4:8002" // Retrofit spajanje na server
 
     const val ENCRYPTED_SHARED_PREF_NAME = "en_shared_pref"
     const val KEY_LOGGED_IN_EMAIL = "KEY_LOGGED_IN_EMAIL"
@@ -90,6 +90,7 @@ object Constants {
     val AT_TAHRIM = Chapter("66.AT-TAHRIM",12)
     val AL_MULK = Chapter("67.AL-MULK",30)
     val AL_KALEM = Chapter("68.AL-KALEM",52)
+    val AL_HAKKA = Chapter("69.AL-HAKKA",52)
     val AL_MEARIDZ = Chapter("70.AL-MEARIDŽ",44)
     val NUH = Chapter("71.NUH",28)
     val AL_DZINN = Chapter("72.AL-DŽINN",28)
@@ -141,23 +142,46 @@ object Constants {
     val Section_NULL = Section("Odaberite cjelinu",0, emptyList())
     val Section1 = Section("Cjelina 1",1, listOf(AL_FATIHA,AL_BEKARA))
     val Section2 = Section("Cjelina 2",2, listOf(AL_BEKARA))
-    val Section3 = Section("Cjelina 3",3, listOf(ALI_IMRAN))
-    val Section4 = Section("Cjelina 4",4, listOf(AN_NISA))
+    val Section3 = Section("Cjelina 3",3, listOf(AL_BEKARA,ALI_IMRAN))
+    val Section4 = Section("Cjelina 4",4, listOf(ALI_IMRAN,AN_NISA))
     val Section5 = Section("Cjelina 5",5, listOf(AN_NISA))
-    val Section6 = Section("Cjelina 6",6, listOf(AL_MAIDA))
-    val Section7 = Section("Cjelina 7",7, listOf(AL_ANAM))
-    val Section8 = Section("Cjelina 8",8, listOf(AL_ARAF))
-    val Section9 = Section("Cjelina 9",9, listOf(AL_ENFAL))
-    val Section10 = Section("Cjelina 10",10, listOf(AT_TEVBA))
-    val Section11 = Section("Cjelina 11",11, listOf(JUNUS,HUD))
-    val Section12 = Section("Cjelina 12",12, listOf(JUSUF))
-    val Section13 = Section("Cjelina 13",13, listOf(AR_RAD, IBRAHIM))
+    val Section6 = Section("Cjelina 6",6, listOf(AN_NISA,AL_MAIDA))
+    val Section7 = Section("Cjelina 7",7, listOf(AL_MAIDA,AL_ANAM))
+    val Section8 = Section("Cjelina 8",8, listOf(AL_ANAM,AL_ARAF))
+    val Section9 = Section("Cjelina 9",9, listOf(AL_ARAF,AL_ENFAL))
+    val Section10 = Section("Cjelina 10",10, listOf(AL_ENFAL,AT_TEVBA))
+    val Section11 = Section("Cjelina 11",11, listOf(AT_TEVBA,JUNUS,HUD))
+    val Section12 = Section("Cjelina 12",12, listOf(HUD,JUSUF))
+    val Section13 = Section("Cjelina 13",13, listOf(JUSUF,AR_RAD, IBRAHIM))
     val Section14 = Section("Cjelina 14",14, listOf(AL_HIJR, AN_NAHL))
     val Section15 = Section("Cjelina 15",15, listOf(AL_ISRA, AL_KEHF))
-    val Section16 = Section("Cjelina 16",16, listOf(MERJEM))
+    val Section16 = Section("Cjelina 16",16, listOf(AL_KEHF,MERJEM, TAHA))
+    val Section17 = Section("Cjelina 17",17, listOf(AL_ENBIJA, AL_HADZDZ))
+    val Section18 = Section("Cjelina 18",18, listOf(AL_MUMINUN, AN_NUR, AL_FURKAN))
+    val Section19 = Section("Cjelina 19",19, listOf(AL_FURKAN, AS_SUARA, AN_NAML))
+    val Section20 = Section("Cjelina 20",20, listOf(AN_NAML, AL_KASAS, AL_ANKEBUT))
+    val Section21 = Section("Cjelina 21",21, listOf(AL_ANKEBUT, AR_RUM, LUKMAN, AS_SEDZDE, AL_AHZAB,))
+    val Section22 = Section("Cjelina 22",22, listOf(AL_AHZAB, SEBE, FATIR, YA_SIN,))
+    val Section23 = Section("Cjelina 23",23, listOf(YA_SIN, AS_SAFAT, SAD, AZ_ZUMER,))
+    val Section24 = Section("Cjelina 24",24, listOf(AZ_ZUMER, MUMIN, FUSSILET))
+    val Section25 = Section("Cjelina 25",25, listOf(FUSSILET, AS_SURA, AZ_ZUHRUF, AD_DUHAN, AL_DZASIJE))
+    val Section26 = Section("Cjelina 26",26, listOf(AL_DZASIJE,AL_AHKAF,MUHAMMAD,AL_FATH,AL_HUDZURAT,QAF,AZ_ZARIJAT))
+    val Section27 = Section("Cjelina 27",27, listOf(AZ_ZARIJAT, AT_TUR, AN_NADZM, AL_KAMER,
+        AR_RAHMAN, AL_VAKIA, AL_HADID,))
+    val Section28 = Section("Cjelina 28",28, listOf(AL_MUDZADELE, AL_HASR, AL_MUMTEHINE, AS_SAFF,
+        AL_DZUMUA, AL_MUNAFIKUN, AT_TEGABUN, AT_TALAK, AT_TAHRIM))
+    val Section29 = Section("Cjelina 29",29, listOf(AL_MULK, AL_KALEM, AL_HAKKA, AL_MEARIDZ, NUH,
+        AL_DZINN, AL_MUZZEMMIL, AL_MUDDESSIR, AL_KIJAME, AL_INSAN, AL_MURSELAT,))
+    val Section30 = Section("Cjelina 30",30, listOf(AN_NEBE, AN_NAZIAT, ABESE, AT_TEKVIR, AL_INFITAR,
+        AL_MUTAFFIFIN, AL_INSIKAK, AL_BURUDZ, AT_TARIK, AL_ELA, AL_GASIJE, AL_FEDZR, AL_BELED,
+        AS_SEMS, AL_LEJL, AD_DUHA, AL_INSIRAH, AT_TIN, AL_ALEK, AL_KADR, AL_BEJJINE, AZ_ZELZELE,
+        AL_ADIJAT, AL_KARIA, AT_TEKASUR, AL_ASR, AL_HUMEZE, AL_FIL, KUREJS, AL_MAUN, AL_KEVSER,
+        AL_KAFIRUN, AN_NASR, AL_LEHEB, AL_IHLAS, AL_FELEK, AN_NAS))
 
     val SECTIONS = listOf(Section_NULL, Section1, Section2,Section3,Section4,Section5,Section6,
-        Section7,Section8,Section9,Section10,Section11,Section12,Section13,Section14,Section15,Section16)
+        Section7,Section8,Section9,Section10,Section11,Section12,Section13,Section14,Section15,Section16,
+        Section17,Section18,Section19,Section20,Section21,Section22,Section23,Section24,Section25,Section26,
+        Section27,Section28,Section29,Section30)
 
 
     val TYPE_NULL = AnswerType("Svi odgovori")
