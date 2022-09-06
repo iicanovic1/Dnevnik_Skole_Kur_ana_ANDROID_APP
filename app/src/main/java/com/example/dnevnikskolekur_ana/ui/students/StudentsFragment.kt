@@ -167,7 +167,7 @@ class StudentsFragment : BaseFragment(R.layout.fragment_students) {
 
     private fun setupSwipeRefreshLayout() {
         swipeRefreshLayout.setOnRefreshListener {
-            viewModel.syncAllNotes()
+            viewModel.syncAllStudents()
         }
     }
 
@@ -190,7 +190,7 @@ class StudentsFragment : BaseFragment(R.layout.fragment_students) {
             val position = viewHolder.layoutPosition
             val student = studentAdapter.students[position]
             viewModel.deleteStudent(student.id)
-            Snackbar.make(requireView(),"Student je uspješno obrisan", Snackbar.LENGTH_INDEFINITE).apply {
+            Snackbar.make(requireView(),"Učenik je uspješno obrisan", Snackbar.LENGTH_INDEFINITE).apply {
                 setAction("Otkaži"){
                     viewModel.insertStudent(student)
                     viewModel.deleteLocallyDeletedStudentID(student.id)

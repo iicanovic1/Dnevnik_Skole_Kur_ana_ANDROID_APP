@@ -64,7 +64,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1"
-    // mogućnost spašavanja login stanja
+    // mogućnost spašavanja login stanja u enkriptovane shared preferences
     implementation "androidx.security:security-crypto:1.1.0-alpha03"
 
     // Room database
@@ -104,9 +104,6 @@ dependencies {
 
     // Timber , login
     implementation 'com.jakewharton.timber:timber:4.7.1'
-
-    // Markwon
-    implementation "io.noties.markwon:core:4.4.0"
 
     // Color Picker Dialog
     implementation "com.github.skydoves:colorpickerview:2.1.7"

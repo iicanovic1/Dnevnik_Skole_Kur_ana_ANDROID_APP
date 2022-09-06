@@ -18,8 +18,6 @@ interface StudentDao {
     @Query("DELETE FROM students WHERE id = :studentID")
     suspend fun deleteStudentById(studentID : String)
 
-    @Query("DELETE FROM students WHERE isSynced = 1")
-    suspend fun deleteAllSyncedStudents()
 
     @Query("DELETE FROM students")
     suspend fun deleteAllStudents()

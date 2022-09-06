@@ -17,13 +17,11 @@ import com.example.dnevnikskolekur_ana.other.Constants.DEFAULT_STUDENT_COLOR
 import com.example.dnevnikskolekur_ana.other.Constants.KEY_LOGGED_IN_EMAIL
 import com.example.dnevnikskolekur_ana.other.Constants.NO_EMAIL
 import com.example.dnevnikskolekur_ana.other.Status
-import com.example.dnevnikskolekur_ana.ui.dialogs.ColorPickerDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_add_edit_student.*
 import java.util.*
 import javax.inject.Inject
 
-const val FRAGMENT_TAG = "AddEditNoteFragment"
 @AndroidEntryPoint
 class AddEditStudentFragment : BaseFragment(R.layout.fragment_add_edit_student) {
 

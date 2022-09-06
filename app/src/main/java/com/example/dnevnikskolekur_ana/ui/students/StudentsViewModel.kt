@@ -15,7 +15,7 @@ class StudentsViewModel @Inject constructor (
 ): ViewModel() {
 
     private  val _forceUpdate = MutableLiveData<Boolean>(false)
-    fun syncAllNotes() = _forceUpdate.postValue(true)
+    fun syncAllStudents() = _forceUpdate.postValue(true)
 
     private val _allStudents = _forceUpdate.switchMap {
         repository.getAllStudents().asLiveData(viewModelScope.coroutineContext)
