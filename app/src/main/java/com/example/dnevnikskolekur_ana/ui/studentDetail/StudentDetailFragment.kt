@@ -73,9 +73,13 @@ class StudentDetailFragment : BaseFragment(R.layout.fragment_student_detail) {
         }
 
         answersAdapter.setOnItemClickListener {
-            findNavController().navigate(
-                StudentDetailFragmentDirections.actionStudentDetailFragmentToAddEditAnswersFragment(args.id,it.id)
-            )
+            if (hasEditAccess()){
+                findNavController().navigate(
+                    StudentDetailFragmentDirections.actionStudentDetailFragmentToAddEditAnswersFragment(args.id,it.id)
+                )
+            } else {
+                showSnackbar("Nemate pravo da uređujete profil ovoga učenika!")
+            }
         }
 
 
